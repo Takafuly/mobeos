@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ producer.owner }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>Block Producer</b></h3>
+      {{ producer.owner }}
+      <p *ngIf="producer.is_active == 1">Active</p>
+      <p *ngIf="producer.is_active == 0">Inactive</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>PRODUCER KEY </b></h3>
+      {{ producer.producer_key }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>TOTAL VOTES</b></h3>
+      {{ producer.total_votes }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>UNPAID BLOCKS </b></h3>
+      {{ producer.unpaid_blocks }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>WEBSITE </b></h3>
+      <p (click)="openURL()">{{ producer.url }}</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

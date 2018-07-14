@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> Transfer </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+      <ion-card-content>
+        <h2><b>Available Balance</b></h2>
+        <p>{{available_balance}} (EOS)</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-item>
+          <ion-label color="primary" stacked>Receiver Account Name</ion-label>
+          <ion-input type="text" [(ngModel)]="receiver_acct"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Sender Account Name</ion-label>
+          <ion-input type="text" [(ngModel)]="sender_acct"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Token Contract</ion-label>
+          <ion-input type="text" [(ngModel)]="token_contract"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Token Symbol</ion-label>
+          <ion-input type="text" [(ngModel)]="tokenname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Amount to send ({{tokenname}})</ion-label>
+          <ion-input type="number" [(ngModel)]="amount_2send"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" stacked>Memo</ion-label>
+          <ion-input type="text" [(ngModel)]="memo"></ion-input>
+        </ion-item>
+        <button ion-button color="primary" (click)="send()" block>{{ 'SEND' | translate }}</button>
+    </ion-card>
+
+
+</ion-content>

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button clear end icon-only (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Voting
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let producer of listProducers" (click)="openItem(producer)">
+      <ion-label>
+        <h2>{{producer.owner}}</h2>
+      </ion-label>
+      <ion-checkbox item-start (click)="updatelist(producer)"></ion-checkbox>
+      <button ion-button clear item-end>View</button>
+    </ion-item>
+  </ion-list>
+  <ion-fab center bottom>
+    <button ion-fab color="primary" (click)="castvote()">CAST</button>
+  </ion-fab>
+</ion-content>

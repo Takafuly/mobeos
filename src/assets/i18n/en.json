@@ -5,12 +5,15 @@
   "EMAIL": "Email",
   "USERNAME": "Username",
   "PASSWORD": "Password",
-  "LOGIN": "Sign in",
-  "SIGNUP": "Sign up",
+  "LOGIN": "Continue to Wallet",
+  "SIGNUP": "Import Private Key",
 
-  "TAB1_TITLE": "Items",
-  "TAB2_TITLE": "Search",
-  "TAB3_TITLE": "Settings",
+  "TAB1_TITLE": "Main",
+  "TAB2_TITLE": "Stake",
+  "TAB3_TITLE": "RAM",
+  "TAB4_TITLE": "Voting",
+  "TAB5_TITLE": "Transfer",
+  "TAB6_TITLE": "Settings",
 
   "MAP_TITLE": "Map",
 
@@ -28,7 +31,7 @@
 
   "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
 
-  "WELCOME_INTRO": "The starting point for your next great Ionic app",
+  "WELCOME_INTRO": "Manage your EOS account from your smart phone",
 
   "SETTINGS_TITLE": "Settings",
   "SETTINGS_OPTION1": "Option 1",
@@ -42,14 +45,14 @@
 
   "WELCOME_TITLE": "Welcome",
 
-  "LOGIN_TITLE": "Sign in",
+  "LOGIN_TITLE": "Continue to Wallet",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
-  "LOGIN_BUTTON": "Sign in",
-  "SIGNUP_TITLE": "Sign up",
+  "LOGIN_BUTTON": "Proceed",
+  "SIGNUP_TITLE": "Import Private Key",
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
-  "SIGNUP_BUTTON": "Sign up",
+  "SIGNUP_BUTTON": "Proceed",
 
-  "LIST_MASTER_TITLE": "Items",
+  "LIST_MASTER_TITLE": "Main",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
@@ -63,6 +66,6 @@
 
   "CARDS_TITLE": "Social",
 
-  "SEARCH_TITLE": "Search",
+  "STAKE_TITLE": "Stake",
   "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
 }

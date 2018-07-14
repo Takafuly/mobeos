@@ -9,6 +9,8 @@ export class Settings {
   private SETTINGS_KEY: string = '_settings';
 
   settings: any;
+  config: any = {};
+  accountname: any;
 
   _defaults: any;
   _readyPromise: Promise<any>;
@@ -60,6 +62,30 @@ export class Settings {
       .then(settings => {
         return settings[key];
       });
+  }
+
+  getEosConfig() {
+    return this.config;
+  }
+
+  setEosConfigPK(pk) {
+    this.config = {
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',//'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
+        keyProvider: [pk], // WIF string or array of keys..
+        httpEndpoint: 'https://mainnet.genereos.io',//'http://jungle.cryptolions.io:38888',//'http://br.eosrio.io:8080',
+        expireInSeconds: 60,
+        broadcast: true,
+        verbose: true, // API activity
+        sign: true
+      };
+  }
+
+  getAccountName() {
+    return this.accountname;
+  }
+
+  setAccountName(acctName) {
+    this.accountname = acctName;
   }
 
   save() {

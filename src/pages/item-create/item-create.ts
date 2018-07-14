@@ -34,37 +34,40 @@ export class ItemCreatePage {
 
   }
 
-  getPicture() {
-    if (Camera['installed']()) {
-      this.camera.getPicture({
-        destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 96,
-        targetHeight: 96
-      }).then((data) => {
-        this.form.patchValue({ 'profilePic': 'data:image/jpg;base64,' + data });
-      }, (err) => {
-        alert('Unable to take photo');
-      })
-    } else {
-      this.fileInput.nativeElement.click();
+  createAccount() {
+    // this.eos.transaction(tr => {
+    //     tr.newaccount({
+    //       creator: this.acct_creator,
+    //       name: this.acct_name,
+    //       owner: this.pubkey_owner,
+    //       active: this.pubkey_active
+    //     })
+    //     tr.buyrambytes({
+    //       payer: this.acct_creator,
+    //       receiver: this.acct_name,
+    //       bytes: Number(this.ram)
+    //     })
+    //     tr.delegatebw({
+    //       from: this.acct_creator,
+    //       receiver: this.acct_name,
+    //       stake_net_quantity: this.net + ' EOS',
+    //       stake_cpu_quantity: this.cpu + ' EOS',
+    //       transfer: this.transfer ? 1:0
+    //     })
+    //   }).then((data) => {
+    //     console.log(data.transaction_id);
+    //     this.setState({loading:false, error:false, success: data.transaction_id});
+    //   }).catch((e) => {
+    //     let error = JSON.stringify(e);
+    //     this.setState({loading:false, error:true});
+    //
+    //     if(error.includes('name is already taken')) {
+    //       this.setState({reason:'Someone already owns that name.'});
+    //     } else if(error.includes('Missing required accounts')) {
+    //       this.setState({reason:'Incorrect scatter account - please review chain id, network, and account name.'});
+    //     }
+    //   });
     }
-  }
-
-  processWebImage(event) {
-    let reader = new FileReader();
-    reader.onload = (readerEvent) => {
-
-      let imageData = (readerEvent.target as any).result;
-      this.form.patchValue({ 'profilePic': imageData });
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
-  }
-
-  getProfileImageStyle() {
-    return 'url(' + this.form.controls['profilePic'].value + ')'
-  }
-
   /**
    * The user cancelled, so we dismiss without sending data back.
    */

@@ -1,11 +1,18 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar align-title="left">
     <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only (click)="addItem()">
+    <ion-buttons start>
+      <button ion-button clear end icon-only (click)="addAccount()">
         <ion-icon name="add"></ion-icon>
+      </button>
+      <button ion-button clear end icon-only (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button round end (click)="listTokens()">
+        TOKENS
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -14,22 +21,100 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of currentItems">
-      <button ion-item (click)="openItem(item)">
-        <ion-avatar item-start>
-          <img [src]="item.profilePic" />
-        </ion-avatar>
-        <h2>{{item.name}}</h2>
-        <p>{{item.about}}</p>
-        <ion-note item-end *ngIf="item.note">{{item.note}}</ion-note>
-      </button>
+  <ion-card>
+    <ion-card-content>
+      <h3><b>ACCOUNT NAME </b></h3>
+      {{ account_info.account_name }}
+    </ion-card-content>
+  </ion-card>
 
-      <ion-item-options>
-        <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+  <ion-card>
+    <ion-card-content>
+      <h3><b>TOTAL BALANCE </b></h3>
+      {{ total_balance }} EOS
+    </ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <ion-card-content>
+            <h3><b>Staked </b></h3>
+            <h4> {{ staked_balance }} EOS </h4>
+            <circle-progress
+              [percent]=staked_balance_percentage
+              [radius]="50"
+              [outerStrokeWidth]="10"
+              [innerStrokeWidth]="4"
+              [showSubtitle] = "false"
+              [outerStrokeColor]="'#b7161e'"
+              [innerStrokeColor]="'#dda4a9'"
+              [animation]="true"
+              [animationDuration]="600"
+            ></circle-progress>
+          </ion-card-content>
+        </ion-col>
+        <ion-col col-6>
+          <ion-card-content>
+            <h3><b>Unstaked</b></h3>
+            <h4> {{ unstaked_balance }} EOS</h4>
+            <circle-progress
+              [percent]=unstaked_balance_percentage
+              [radius]="50"
+              [outerStrokeWidth]="10"
+              [innerStrokeWidth]="4"
+              [clockwise] ="false"
+              [showSubtitle] = "false"
+              [outerStrokeColor]="'#78C000'"
+              [innerStrokeColor]="'#C7E596'"
+              [animation]="true"
+              [animationDuration]="600"
+            ></circle-progress>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b> RESOURCES </b></h3>
+    </ion-card-content>
+      <ion-row>
+        <ion-col col-6>
+          <ion-card-content>
+            <h3><b>CPU (min)</b></h3>
+            <h4>{{ used_cpu_time }}/</h4>
+            <h4>{{available_cpu_time}} </h4>
+            <circle-progress
+              [percent]=cpu_usage_percentage
+              [radius]="50"
+              [outerStrokeWidth]="10"
+              [innerStrokeWidth]="4"
+              [showSubtitle] = "false"
+              [outerStrokeColor]="'#691972'"
+              [innerStrokeColor]="'#fbddff'"
+              [animation]="true"
+              [animationDuration]="600"
+            ></circle-progress>
+          </ion-card-content>
+        </ion-col>
+        <ion-col col-6>
+          <ion-card-content>
+            <h3><b>BW (MB)</b></h3>
+            <h4> {{ used_bw }} /</h4>
+            <h4>{{available_bw}} </h4>
+            <circle-progress
+              [percent]=bw_usage_percentage
+              [radius]="50"
+              [outerStrokeWidth]="10"
+              [innerStrokeWidth]="4"
+              [showSubtitle] = "false"
+              [outerStrokeColor]="'#234c8e'"
+              [innerStrokeColor]="'#e5efff'"
+              [animation]="true"
+              [animationDuration]="600"
+            ></circle-progress>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+  </ion-card>
+
 </ion-content>

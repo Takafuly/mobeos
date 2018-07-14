@@ -1,0 +1,3 @@
+# Search
+
+The Stake page .

@@ -1,0 +1,79 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title> RAM </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-card>
+      <ion-card-content>
+        <h2><b>Used/Quota</b> {{ram_usage}}/{{ram_quota}} (KB)</h2>
+        <p></p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label color="primary" stacked>Receiver Account</ion-label>
+            <ion-input type="text" [(ngModel)]="receiver_acct"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label color="primary" stacked>Payer Account</ion-label>
+            <ion-input type="text" [(ngModel)]="payer_acct"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+          <ion-row radio-group [(ngModel)]="buyin">
+            <ion-col>
+              <ion-item>
+                <ion-label color="primary" stacked>RAM purchased in</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <ion-radio checked="checked" value="1"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <ion-label color="primary" stacked>EOS</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <ion-radio value="0"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <ion-label color="primary" stacked>Byte</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        <ion-item>
+          <ion-input type="number" [(ngModel)]="ram_2purchase"></ion-input>
+        </ion-item>
+        <button ion-button color="primary" (click)="buyRAM()" block>{{ 'BUY RAM' | translate }}</button>
+    </ion-card>
+
+
+    <ion-card>
+        <ion-item>
+          <ion-label color="secondary" stacked>Seller Account</ion-label>
+          <ion-input type="text" [(ngModel)]="seller_acct"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="secondary" stacked>RAM to sell in (Bytes)</ion-label>
+          <ion-input type="number" [(ngModel)]="ram_2sell" ></ion-input>
+        </ion-item>
+        <button ion-button color="secondary" (click)="sellRAM()" block>{{ 'SELL RAM' | translate }}</button>
+    </ion-card>
+
+</ion-content>
