@@ -12,23 +12,9 @@
   "TAB2_TITLE": "Busca",
   "TAB3_TITLE": "Configurações",
 
-  "MAP_TITLE": "Mapa",
 
-  "TUTORIAL_SKIP_BUTTON": "Pular",
-  "TUTORIAL_CONTINUE_BUTTON": "Continuar",
 
-  "TUTORIAL_SLIDE1_TITLE": "Bem-vindo ao Ionic Super Starter",
-  "TUTORIAL_SLIDE1_DESCRIPTION": "O <b>Ionic Super Starter</b> é um starter para Ionic completo, com diversos componentes e páginas prontas para ser utilizado como guia de melhores práticas.",
-
-  "TUTORIAL_SLIDE2_TITLE": "Como utilizar o Super Starter",
-  "TUTORIAL_SLIDE2_DESCRIPTION": "Combine os tipos de páginas que você quer e remova aquelas que não precisa. No starter existem muitos casos de uso comuns de layouts e páginas como login, cadastro, abas e de tutorial.",
-
-  "TUTORIAL_SLIDE3_TITLE": "Iniciando o projeto",
-  "TUTORIAL_SLIDE3_DESCRIPTION": "Precisa de ajuda? Dê uma olhada no README do Super Starter para um tutorial completo",
-
-  "TUTORIAL_SLIDE4_TITLE": "Pronto para Usar?",
-
-  "WELCOME_INTRO": "O ponto de partida para seu próximo app feito no Ionic",
+  "WELCOME_INTRO": "O ponto de partida ",
 
   "SETTINGS_TITLE": "Configurações",
   "SETTINGS_OPTION1": "Opção 1",
@@ -52,17 +38,13 @@
   "LIST_MASTER_TITLE": "Itens",
 
   "ITEM_CREATE_TITLE": "Novo Item",
-  "ITEM_CREATE_CHOOSE_IMAGE": "Adicionar Imagem",
 
-  "ITEM_NAME_PLACEHOLDER": "Nome",
-  "ITEM_ABOUT_PLACEHOLDER": "Sobre",
 
   "DONE_BUTTON": "Pronto",
   "CANCEL_BUTTON": "Cancelar",
   "DELETE_BUTTON": "Apagar",
 
-  "CARDS_TITLE": "Social",
 
   "SEARCH_TITLE": "Busca",
-  "SEARCH_PLACEHOLDER": "Procure um item da lista, ex: \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Procure um item da lista,"
 }

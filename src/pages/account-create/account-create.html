@@ -1,0 +1,66 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ 'ITEM_CREATE_TITLE' | translate }}</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span color="primary" showWhen="ios">
+          {{ 'CANCEL_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" stacked>Creator Account</ion-label>
+          <ion-input type="text" [(ngModel)]="acct_creator"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary" stacked>New Account</ion-label>
+          <ion-input type="text" [(ngModel)]="acct_name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <ion-label color="primary">Transfer Stake</ion-label>
+      <ion-toggle [(ngModel)]="transfer"></ion-toggle>
+    </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label color="primary" stacked>CPU Stake (EOS)</ion-label>
+        <ion-input type="text" [(ngModel)]="cpu_stake"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label color="primary" stacked>BW Stake (EOS)</ion-label>
+        <ion-input type="text" [(ngModel)]="net_stake"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label color="primary" stacked>Ram Purchase (Bytes)</ion-label>
+    <ion-input type="number" [(ngModel)]="ram"></ion-input>
+  </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Owner Key</ion-label>
+        <ion-input type="text" [(ngModel)]="owner_key"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" stacked>Active Key</ion-label>
+        <ion-input type="text" [(ngModel)]="active_key"></ion-input>
+      </ion-item>
+      <button ion-button outline color="primary" (click)="genKeys()" block>Generate Keys</button>
+    <button ion-button color="primary" (click)="createAccount()" block>CREATE ACCOUNT</button>
+  </ion-card>
+</ion-content>

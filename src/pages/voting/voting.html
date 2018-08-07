@@ -8,11 +8,17 @@
     <ion-title>
       Voting
     </ion-title>
+    <ion-searchbar
+      [(ngModel)]="searchInput"
+      [showCancelButton]="shouldShowCancel"
+      [debounce] = 2000
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)">
+    </ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
   <ion-list>
     <ion-item *ngFor="let producer of listProducers" (click)="openItem(producer)">
       <ion-label>
@@ -23,6 +29,10 @@
     </ion-item>
   </ion-list>
   <ion-fab center bottom>
-    <button ion-fab color="primary" (click)="castvote()">CAST</button>
+    <button ion-fab color="primary"><ion-icon name="more"></ion-icon></button>
+    <ion-fab-list side="right">
+      <button ion-fab color="primary" (click)="castvote()">CAST</button>
+      <button ion-fab color="primary" (click)="proxyPrompt()">Proxy</button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

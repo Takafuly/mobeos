@@ -3,6 +3,9 @@
   <ion-navbar align-title="left">
     <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
     <ion-buttons start>
+      <button ion-button clear end icon-only (click)="lock()">
+        <ion-icon name="lock"></ion-icon>
+      </button>
       <button ion-button clear end icon-only (click)="addAccount()">
         <ion-icon name="add"></ion-icon>
       </button>

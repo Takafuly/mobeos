@@ -1,1 +1,3 @@
-### :point_right: This starter repo has moved to the [ionic-team/starters](https://github.com/ionic-team/starters/tree/master/ionic-angular/official/super) repo! :point_left:
+### Main
+
+This is a repo for the MOBEOS toolkit a mobile app toolkit for the EOS Blockchain

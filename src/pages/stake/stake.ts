@@ -112,7 +112,7 @@ export class StakePage {
         {
           text: 'View',
           handler: () => {
-            this.iab.create("https://eospark.com/Jungle/tx/"+id,"_blank");
+            this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
           }
         }
       ]
@@ -208,8 +208,8 @@ export class StakePage {
         this.presentLoading();
         this.eos.transaction(tr => {
           tr.delegatebw({
-            from: "asghaier",
-            receiver: "asghaier",
+            from: this.accountname,
+            receiver: this.accountname,
             stake_net_quantity: (parseFloat(this.net_staking_value)).toFixed(4)+' EOS',
             stake_cpu_quantity: (parseFloat(this.cpu_staking_value)).toFixed(4)+' EOS',
             transfer: 0
@@ -234,8 +234,8 @@ export class StakePage {
         this.presentLoading();
         this.eos.transaction(tr => {
           tr.undelegatebw({
-            from: "asghaier",
-            receiver: "asghaier",
+            from: this.accountname,
+            receiver: this.accountname,
             unstake_net_quantity: (parseFloat(this.net_unstaking_value)).toFixed(4)+' EOS',
             unstake_cpu_quantity: (parseFloat(this.cpu_unstaking_value)).toFixed(4)+' EOS'
           })

@@ -16,4 +16,4 @@ import { ProducerDetailPage } from './producer-detail';
     ProducerDetailPage
   ]
 })
-export class ItemDetailPageModule { }
+export class ProducerDetailPageModule { }

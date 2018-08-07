@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
-import { User } from '../../providers/providers';
+import CryptoJS from 'crypto-js';
+
+import { Settings } from '../../providers/providers';
+
 import { MainPage } from '../pages';
 
 @IonicPage()
@@ -11,29 +15,44 @@ import { MainPage } from '../pages';
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
-  };
-
+  pin : any;
   // Our translated text strings
-  private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
-    public user: User,
     public toastCtrl: ToastController,
+    public settings: Settings,
+    public storage: Storage,
+    public navParams: NavParams,
     public translateService: TranslateService) {
 
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })
+  }
+
+  generateKey(p){
+    var salt = "E1F53135E559C253";
+    return CryptoJS.PBKDF2(p, salt, { keySize: 512/32, iterations: 1000 });
+  }
+
+  getAccount() {
+    let skey = this.generateKey(this.pin);
+    console.log("skey"+skey.toString());
+    this.storage.get(skey.toString())
+      .then((val) => {
+        var bytes  = CryptoJS.AES.decrypt(val, skey.toString());
+        console.log("skey"+skey.toString());
+        console.log(bytes.toString(CryptoJS.enc.Utf8));
+        var plaintext = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        this.settings.setEosConfigPK(plaintext.key);
+        this.settings.setAccountName(plaintext.name);
+        console.log(plaintext);
+        this.doLogin();
+      }).catch(error => {
+        alert("Unable to retrieve wallet");
+      });
   }
 
   // Attempt to login in through our User service
   doLogin() {
+
       this.navCtrl.push(MainPage);
   }
 }

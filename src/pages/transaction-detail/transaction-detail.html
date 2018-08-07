@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ trx.trx.trx.actions.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>FROM:</b></h3>
+      {{ trx.trx.trx.actions.data.from }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>TO: </b></h3>
+      {{ trx.trx.trx.actions.data.to }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>QUANTITY:</b></h3>
+      {{ trx.trx.trx.actions.data.quantity }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>MEMO:</b></h3>
+      {{ trx.trx.trx.actions.data.memo }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <h3><b>ID: </b></h3>
+      <p (click)="openURL(trx.id)">{{ trx.id }}</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

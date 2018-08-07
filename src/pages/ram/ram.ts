@@ -112,7 +112,7 @@ export class RamPage {
         {
           text: 'View',
           handler: () => {
-            this.iab.create("https://eospark.com/Jungle/tx/"+id,"_blank");
+            this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
           }
         }
       ]

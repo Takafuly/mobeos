@@ -10,11 +10,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { QRCodeModule } from 'angular2-qrcode';
+import { Http, Headers } from '@angular/http';
 
-import { Items } from '../mocks/providers/items';
 import { Settings } from '../providers/providers';
-import { User } from '../providers/providers';
-import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
 
 import * as Eos from 'eosjs';
@@ -28,17 +27,9 @@ export function createTranslateLoader(http: HttpClient) {
 
 export function provideSettings(storage: Storage) {
   /**
-   * The Settings provider takes a set of default settings for your app.
-   *
-   * You can add new settings options at any time. Once the settings are saved,
-   * these values will not overwrite the saved values (this can be done manually if desired).
+   * The Settings provider takes a set of default settings for the app.
    */
-  return new Settings(storage, {
-    option1: true,
-    option2: 'Ionitron J. Framework',
-    option3: '3',
-    option4: 'Hello'
-  });
+  return new Settings(storage);
 }
 
 @NgModule({
@@ -65,6 +56,7 @@ export function provideSettings(storage: Storage) {
       innerStrokeColor: "#C7E596",
       animationDuration: 300
     }),
+    QRCodeModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -72,9 +64,6 @@ export function provideSettings(storage: Storage) {
     MyApp
   ],
   providers: [
-    Api,
-    Items,
-    User,
     Camera,
     SplashScreen,
     InAppBrowser,

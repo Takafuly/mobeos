@@ -102,7 +102,7 @@ export class TransferPage {
         {
           text: 'View',
           handler: () => {
-            this.iab.create("https://eospark.com/Jungle/tx/"+id,"_blank");
+            this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
           }
         }
       ]
@@ -145,7 +145,7 @@ export class TransferPage {
                 }
               });
             } else {
-              console.log('no such contract');
+              this.presentAlert('No such token contract');
             }
           } else {
             this.presentAlert(err.message);

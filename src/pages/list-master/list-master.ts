@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, LoadingController } from 'ionic-angular';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-
+import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/timeout';
 import { Settings } from '../../providers/providers';
-
+import { FirstRunPage } from '../pages';
 import * as Eos from 'eosjs';
 
 
@@ -33,31 +36,46 @@ export class ListMasterPage {
   tokens: any = [];
   tokensname: any = [];
   tokensvalue: any = [];
+  tokensList: any = [];
   accountname: any;
+  loading: any;
+  apiUrl: any = "http://mobeostest.herokuapp.com/tokens/";
 
-  constructor(public navCtrl: NavController, public settings: Settings, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public settings: Settings, public modalCtrl: ModalController,
+              public loadingCtrl: LoadingController, public _http: HttpClient) {
     let config = settings.getEosConfig();
     this.eos = Eos(config);
     this.accountname = this.settings.accountname;
-    this.ionViewDidLoad();
+    this.tokensList = this.settings.getTokensList();
+    this.loadData();
 
   }
 
+  presentLoading(){
+    this.loading = this.loadingCtrl.create({ content: 'Please wait...'});
+    this.loading.present();
+  }
+
   listTokens(){
+
     let addModal = this.modalCtrl.create('TokensPage',{tokens: this.tokens});
     addModal.present();
   }
 
-
   addAccount() {
 
+    let addModal = this.modalCtrl.create('AccountCreatePage',{eos:this.eos,acct:this.accountname});
+    addModal.present();
   }
 
 
-  ionViewDidLoad() {
+  loadData() {
+    this.presentLoading();
+    this.tokens = [];
     this.eos['getAccount'](this.accountname, (error, result) => {
       if(error){
         console.log(error);
+        this.loading.dismiss();
       }
       if(result){
         console.log(result);
@@ -78,44 +96,56 @@ export class ListMasterPage {
         this.bw_usage_percentage = this.used_bw/this.available_bw*100;
       }
     });
-
-    this.eos['getCurrencyBalance']('eosio.token', this.accountname, (error, result) => {
-      if(error)
-        console.log(error);
-      if(result){
-        console.log(result);
-        this.tokens = result;
+    this.getTokensData()
+    .then(data => {
+      this.tokensList = data;
+      console.log(this.tokensList);
+      for (var i = 0; i < this.tokensList.length; i++) {
+        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountname,this.tokens);
       }
-    });
-
-    this.eos['getCurrencyBalance']('everipediaiq', this.accountname, (error, result) => {
-      if(error)
-        console.log(error);
-      if(result){
-        console.log(result);
-        this.tokens = result;
+      this.loading.dismiss();
+    }).catch((e) => {
+      console.log("tokens");
+      for (var i = 0; i < this.tokensList.length; i++) {
+        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountname,this.tokens);
       }
+      this.loading.dismiss();
     });
+    // for (var i = 0; i < this.tokensList.length; i++) {
+    //   this.getTokenBalance(this.tokensList[i].contract,this.eos,this.accountname,this.tokens);
+    // }
 
-    this.eos.getActions('eosadddddddd').then((data) => {
-      console.log(data);
-    }).catch((e) => {
-      console.log(e);
-    });
+  }
 
-    this.eos['getActions']({
-      account_name: this.accountname,
-      offset: -500,
-      pos: -1
-    }).then((data) => {
-      console.log(data);
-    }).catch((e) => {
-      console.log(e);
+
+  getTokensData() {
+    return new Promise((resolve, reject) => {
+      this._http.get(this.apiUrl,{headers: new HttpHeaders().set('Authorization', 'Basic YWRtaW46bW9ibW9iZW9zZW9z')}).
+      subscribe(data => {
+        console.log(data);
+        resolve(data);
+      }, err => {
+        console.log(err);
+        reject(err);
+      });
     });
   }
 
+  getTokenBalance(tknContract,tokenUrl,eos,acct,tokenBal) {
+      eos['getCurrencyBalance'](tknContract, acct, (error, result) => {
+        if(result){
+          if(result[0])
+            tokenBal.push({bal:result[0],url:tokenUrl});
+        }
+      });
+  }
+
+  lock() {
+     this.navCtrl.push(FirstRunPage);
+  }
+
   refresh() {
-    this.ionViewDidLoad();
+    this.loadData();
   }
 
 }

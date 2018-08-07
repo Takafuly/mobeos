@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
-
+import { Settings } from '../../providers/providers';
 import * as Eos from 'eosjs';
 
 
@@ -13,15 +13,16 @@ export class WelcomePage {
   loading: any;
   eos: any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
+              public settings: Settings, public alertCtrl: AlertController) {
 
-    this.connectEOS('https://mainnet.genereos.io');
+    this.connectEOS('https://eu1.eosdac.io:443');
   }
 
   connectEOS(endpoint) {
     let config = {
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',//'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
-        httpEndpoint: endpoint,//'http://jungle.cryptolions.io:38888',//'http://br.eosrio.io:8080',
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
+        httpEndpoint: endpoint,
         expireInSeconds: 60,
         broadcast: true,
         verbose: false, // API activity
@@ -65,6 +66,7 @@ export class WelcomePage {
         {
           text: 'Connect',
           handler: data => {
+            this.settings.setEosConifgEndpoint(data.endpoint);
             this.connectEOS(data.endpoint);
           }
         }

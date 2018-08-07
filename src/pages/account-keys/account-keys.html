@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Account Keys</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancel()">
+        <span color="primary" showWhen="ios">
+          {{ 'CANCEL_BUTTON' | translate }}
+        </span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-card>
+      <ion-card-content>
+      <p><b>Make sure you take note or a screen shot of your keys as once you close this window will not be able to get the account private key(s)</b></p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+          <ion-card-content>
+            <p>Owner PK: {{ owner_pkey }}</p>
+          </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+          <ion-card-content>
+            <p>Owner PUB: {{ owner_key }}</p>
+          </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+          <ion-card-content>
+            <p>Active PK: {{ active_pkey }}</p>
+          </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+          <ion-card-content>
+            <p>Active PUB: {{ active_key }}</p>
+          </ion-card-content>
+    </ion-card>
+
+</ion-content>

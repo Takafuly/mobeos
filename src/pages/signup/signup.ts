@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 import * as Eos from 'eosjs';
+import CryptoJS from 'crypto-js';
+
 import { Settings } from '../../providers/providers';
-import { User } from '../../providers/providers';
 import { MainPage } from '../pages';
 
 @IonicPage()
@@ -22,15 +25,15 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-    public user: User,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public settings: Settings,
+    public storage: Storage,
     public translateService: TranslateService) {
       //let config = settings.getEosConfig();
       let config = {
-          chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',//'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
-          httpEndpoint: 'https://mainnet.genereos.io',//'http://jungle.cryptolions.io:38888',//'http://br.eosrio.io:8080',
+          chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
+          httpEndpoint: 'https://eu1.eosdac.io:443',//'http://jungle.cryptolions.io:38888',
           expireInSeconds: 60,
           broadcast: true,
           verbose: false, // API activity
@@ -38,6 +41,12 @@ export class SignupPage {
         };
       this.eos = Eos(config);
       this.ecc = Eos.modules['ecc'];
+      console.log(this.settings.getTokensList());
+  }
+
+  generateKey(p){
+    var salt = "E1F53135E559C253";
+    return CryptoJS.PBKDF2(p, salt, { keySize: 512/32, iterations: 1000 });
   }
 
   selectAccount() {
@@ -60,6 +69,7 @@ export class SignupPage {
           handler: data => {
             this.settings.setAccountName(data);
             console.log(data);
+            this.storeAccount(data);
             this.navCtrl.push(MainPage);
           }
         }
@@ -76,29 +86,39 @@ export class SignupPage {
     alert.present();
   }
 
+  storeAccount(data) {
+    let skey = this.generateKey(this.pin);
+    //console.log("skey"+skey.toString());
+    var accountdata = {key: this.pk, name: data};
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(accountdata), skey.toString());
+    this.storage.set(skey.toString(),ciphertext.toString());
+  }
+
   doSignup() {
       if(this.ecc.isValidPrivate(this.pk)){
-        console.log("valid pk");
+        //console.log("valid pk");
         let pubkey = this.ecc.privateToPublic(this.pk);
-        console.log(pubkey);
+        //console.log(pubkey);
         if (this.ecc.isValidPublic(pubkey)) {
+          //console.log(this.settings.getEosConfig());
           this.eos.getKeyAccounts(pubkey)
           .then((data) => {
             if (data['account_names'].length > 0) {
-              console.log(data['account_names'][0]);
+              //console.log(data['account_names'][0]);
               this.settings.setEosConfigPK(this.pk);
               this.listAccts = data['account_names'];
               this.selectAccount();
-              //this.settings.accountname = data['account_names'][1];
-              //this.navCtrl.push(MainPage);
             }
           }).catch((e) => {
-            console.log(e);
+            alert("Error on getting list of accounts associated with this key");
           });
+        }
+        else {
+          alert("Private Key is not valid");
         }
     }
     else{
-      console.log("pk is not valid");
+      alert("Private Key is not valid");
     }
   }
 

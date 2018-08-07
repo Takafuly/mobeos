@@ -14,10 +14,12 @@ import * as Eos from 'eosjs';
 export class VotingPage {
 
   listProducers: any = [];
+  searchedProducers: any = [];
   votinglist: any = [];
   eos: any;
   loading: any;
   accountname: any;
+  searchInput: any;
 
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
@@ -44,7 +46,72 @@ export class VotingPage {
     });
   }
 
-  presentLoading(){
+  selectBP() {
+    // Object with options used to create the alert
+    var options = {
+      title: 'BP Search Results',
+      message: 'Select the BPs that matches your search',
+      inputs: [],
+      buttons: [
+        {
+          text: 'CANCEL',
+          role: 'cancel',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'OK',
+          handler: data => {
+            if(this.votinglist.length+data.length > 30)
+              this.presentAlert("You have exceeded the maximum number (30) of BPs for voting");
+            else{
+              this.votinglist = this.votinglist.concat(data);
+            }
+            //this.settings.setAccountName(data);
+            console.log(data);
+          }
+        }
+      ]
+    };
+
+    options.inputs = [];
+    for(let i=0; i< this.searchedProducers.length; i++) {
+      options.inputs.push({ name : 'options', value: this.searchedProducers[i].owner, label: this.searchedProducers[i].owner, type: 'checkbox' });
+    }
+    let alert = this.alertCtrl.create(options);
+    alert.present();
+  }
+
+  onInput() {
+    if(this.searchInput != ''){
+      this.presentLoading();
+      this.searchedProducers = [];
+      console.log(this.searchInput);
+      let searchTerm = this.searchInput;
+      let tempProducers = this.searchedProducers;
+
+      this.eos['getProducers']({json: true, limit: 500}, (error, result) => {
+        if(error)
+          this.loading.dismiss();
+        if(result){
+          //this.searchedProducers = result.rows;
+          let searchResult = result.rows;
+          searchResult.forEach(function(obj) {
+            if ((obj.owner).includes(searchTerm)) {
+              tempProducers.push(obj);
+            }
+          });
+          //let allList = this.listProducers;
+          this.loading.dismiss();
+          this.selectBP();
+          //searchResult.forEach(function(obj) { if(allListobj.producer == ) = false;});
+        }
+      });
+    }
+  }
+
+  presentLoading() {
     this.loading = this.loadingCtrl.create({ content: 'Please wait...'});
     this.loading.present();
   }
@@ -54,6 +121,36 @@ export class VotingPage {
       title: 'Error',
       subTitle: msg,
       buttons: ['Dismiss']
+    });
+    alert.present();
+  }
+
+  proxyPrompt() {
+    let alert = this.alertCtrl.create({
+      title: 'Set Proxy',
+      subTitle: 'Enter the account name for the proxy you want to delegate your vote to',
+      inputs: [
+        {
+          name: 'proxy',
+          placeholder: 'proxy account name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+
+          }
+        },
+        {
+          text: 'Set',
+          handler: data => {
+            if(data.proxy != '')
+              this.setProxy(data.proxy);
+          }
+        }
+      ]
     });
     alert.present();
   }
@@ -97,7 +194,7 @@ export class VotingPage {
         {
           text: 'View',
           handler: () => {
-            this.iab.create("https://eospark.com/Jungle/tx/"+id,"_blank");
+            this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
           }
         }
       ]
@@ -160,6 +257,23 @@ export class VotingPage {
       }).catch((e) => {console.log(e);});
     } else
       this.presentAlert("voting list should contain a number of BPs between 1 and 30");
+  }
+
+  setProxy(proxyName) {
+        this.presentLoading();
+        this.eos.transaction(tr => {
+          tr.voteproducer({
+            voter: this.accountname,
+            proxy: proxyName,
+          })
+        }).then((data) => {
+          this.loading.dismiss();
+          this.ionViewDidLoad();
+          this.presentConfirm("You have sucussfully set a proxy for voting, do you want to view details of the action at eospark.com?",data.transaction_id);
+        }).catch((e) => {
+          this.loading.dismiss();
+          this.presentAlert(e.message);
+        });
   }
 
 

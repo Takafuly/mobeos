@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="showBack">
     <ion-title>{{ 'LOGIN_TITLE' | translate }}</ion-title>
   </ion-navbar>
 
@@ -8,12 +8,12 @@
 
 
 <ion-content>
-  <form (submit)="doLogin()">
+  <form (submit)="getAccount()">
     <ion-list>
 
       <ion-item>
         <ion-label fixed>PIN</ion-label>
-        <ion-input type="password" [(ngModel)]="account.pin" name="pin"></ion-input>
+        <ion-input type="password" [(ngModel)]="pin" name="pin"></ion-input>
       </ion-item>
 
       <div padding>

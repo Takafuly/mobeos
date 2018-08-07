@@ -1,3 +1,3 @@
 # Voting
 
-The voting page is a simple page meant for text content.
+The voting page is a page meant for selecting the BPs and cast the vote.

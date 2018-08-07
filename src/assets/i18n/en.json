@@ -13,35 +13,15 @@
   "TAB3_TITLE": "RAM",
   "TAB4_TITLE": "Voting",
   "TAB5_TITLE": "Transfer",
-  "TAB6_TITLE": "Settings",
+  "TAB6_TITLE": "Actions",
 
   "MAP_TITLE": "Map",
 
-  "TUTORIAL_SKIP_BUTTON": "Skip",
-  "TUTORIAL_CONTINUE_BUTTON": "Continue",
 
-  "TUTORIAL_SLIDE1_TITLE": "Welcome to the Ionic Super Starter",
-  "TUTORIAL_SLIDE1_DESCRIPTION": "The <b>Ionic Super Starter</b> is a fully-featured Ionic starter with many pre-built pages and best practices.",
-
-  "TUTORIAL_SLIDE2_TITLE": "How to use the Super Starter",
-  "TUTORIAL_SLIDE2_DESCRIPTION": "Assemble the various page types you want and remove the ones you don't. We've provided many common mobile app page layouts, like login and signup pages, tabs, and this tutorial page.",
-
-  "TUTORIAL_SLIDE3_TITLE": "Getting Started",
-  "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
-
-  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
 
   "WELCOME_INTRO": "Manage your EOS account from your smart phone",
 
-  "SETTINGS_TITLE": "Settings",
-  "SETTINGS_OPTION1": "Option 1",
-  "SETTINGS_OPTION2": "Option 2",
-  "SETTINGS_OPTION3": "Option 3",
-  "SETTINGS_OPTION4": "Option 4",
 
-  "SETTINGS_PROFILE_BUTTON": "Edit Profile",
-
-  "SETTINGS_PAGE_PROFILE": "Edit Profile",
 
   "WELCOME_TITLE": "Welcome",
 
@@ -54,8 +34,7 @@
 
   "LIST_MASTER_TITLE": "Main",
 
-  "ITEM_CREATE_TITLE": "New Item",
-  "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
+  "ITEM_CREATE_TITLE": "New Account",
 
   "ITEM_NAME_PLACEHOLDER": "Name",
   "ITEM_ABOUT_PLACEHOLDER": "About",
@@ -64,8 +43,7 @@
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",
 
-  "CARDS_TITLE": "Social",
 
   "STAKE_TITLE": "Stake",
-  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Search the items list ... "
 }

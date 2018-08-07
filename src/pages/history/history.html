@@ -1,25 +1,32 @@
 <ion-header no-shadow>
   <ion-navbar>
-    <ion-buttons end *ngIf="showSkip">
-      <button ion-button (click)="startApp()" color="primary">{{ 'TUTORIAL_SKIP_BUTTON' | translate}}</button>
+    <ion-title> HISTORY </ion-title>
+    <ion-buttons end>
+      <button ion-button clear end icon-only (click)="refresh(true)">
+        <ion-icon *ngIf="!order" name="ios-arrow-round-up"></ion-icon>
+      </button>
+      <button ion-button clear end icon-only (click)="refresh(false)">
+        <ion-icon *ngIf="order" name="ios-arrow-round-down"></ion-icon>
+      </button>
+      <button ion-button clear end icon-only (click)="refresh(order)">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-bounce>
-  <ion-slides pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
-    <ion-slide *ngFor="let slide of slides">
-      <img [src]="slide.image" class="slide-image" />
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
-    </ion-slide>
-    <ion-slide>
-      <img src="assets/img/ica-slidebox-img-4.png" class="slide-image" />
-      <h2 class="slide-title">{{ 'TUTORIAL_SLIDE4_TITLE' | translate }}</h2>
-      <button ion-button icon-end large clear (click)="startApp()">
-        {{ 'TUTORIAL_CONTINUE_BUTTON' | translate }}
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-    </ion-slide>
-  </ion-slides>
+  <ion-list *ngFor="let act of acts">
+
+    <ion-item  *ngIf="act.action_trace.act.name == 'transfer' && act.action_trace.act.data.from " (click)="openItem(act.action_trace.trx_id)">
+      <ion-icon name="arrow-dropleft-circle" color="primary" *ngIf="act.action_trace.act.data.from == accountname" item-start></ion-icon>
+      <ion-icon name="arrow-dropright-circle" color="secondary" *ngIf="act.action_trace.act.data.to == accountname" item-start></ion-icon>
+
+          <h3>{{ act.action_trace.act.data.from }} -> {{ act.action_trace.act.data.to }}</h3>
+          <h3><u>{{ act.action_trace.act.data.quantity }}</u></h3>
+          <p>{{ act.action_trace.act.data.memo }}</p>
+
+
+    </ion-item>
+  </ion-list>
 </ion-content>

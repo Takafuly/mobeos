@@ -17,8 +17,11 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let token of listTokens">
+    <ion-avatar item-start>
+      <img src={{token.url}}>
+    </ion-avatar>
       <ion-label>
-        <h2>{{token}}</h2>
+        <h2>{{token.bal}}</h2>
       </ion-label>
     </ion-item>
   </ion-list>
