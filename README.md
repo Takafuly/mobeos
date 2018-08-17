@@ -1,6 +1,6 @@
-### Main
+### Overview
 
-This is a repo for the MOBEOS toolkit a mobile app toolkit for the EOS Blockchain
+This is a repo for the MOBEOS toolkit, a mobile app toolkit for the EOS Blockchain
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ ionic serve
 ## Authors
 
 * **Ahmed Sghaier** - *Core author* - [asghaier](https://github.com/orgs/Takafuly/people/asghaier76)
-* **Abdurrahman Elbuni** - *Maintaining development roadmap, contribution and improving MOBEOS toolkit* - [aelbuni](https://github.com/orgs/Takafuly/people/aelbuni)
+* **Abdurrahman Elbuni** - *Maintaining development roadmap, and a contributor* - [aelbuni](https://github.com/orgs/Takafuly/people/aelbuni)
 
 ## Contributing
 
