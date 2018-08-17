@@ -10,7 +10,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { QRCodeModule } from 'angular2-qrcode';
 import { Http, Headers } from '@angular/http';
 
 import { Settings } from '../providers/providers';
@@ -56,7 +55,6 @@ export function provideSettings(storage: Storage) {
       innerStrokeColor: "#C7E596",
       animationDuration: 300
     }),
-    QRCodeModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
