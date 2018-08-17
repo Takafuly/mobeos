@@ -34,11 +34,6 @@ ionic serve
 * [Ionic](https://ionicframework.com/docs/) - Cross-platform apps framework.
 * [Angular](https://maven.apache.org/) - Front-end web application platform
 
-## Authors
-
-* **Ahmed Sghaier** - *Core author* - [asghaier](https://github.com/orgs/Takafuly/people/asghaier76)
-* **Abdurrahman Elbuni** - *Maintaining development roadmap, and a contributor* - [aelbuni](https://github.com/orgs/Takafuly/people/aelbuni)
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
