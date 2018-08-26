@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, MenuController, ModalController,NavController, LoadingController, Platform } from 'ionic-angular';
+import { IonicPage, MenuController, ModalController, NavController, LoadingController, Platform } from 'ionic-angular';
 import { Settings } from '../../providers/providers';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import * as Eos from 'eosjs';
@@ -20,44 +20,53 @@ export class HistoryPage {
   slides: Slide[];
   showSkip = true;
   eos: any;
-  accountname: any;
-  acts:any = [];
+  eosConfig: any;
+  accountName: any;
+  acts: any = [];
   loading: any;
   order: any = true;
   dir: string = 'ltr';
 
-  constructor(public navCtrl: NavController, public settings: Settings, public menu: MenuController, translate: TranslateService,
-              public loadingCtrl: LoadingController, public modalCtrl: ModalController, public platform: Platform, private iab: InAppBrowser) {
-    let config = settings.getEosConfig();
-    this.eos = Eos(config);
-    this.accountname = this.settings.accountname;
+  constructor(
+    public navCtrl: NavController, 
+    public settings: Settings, 
+    public menu: MenuController, 
+    public translate: TranslateService,
+    public loadingCtrl: LoadingController, 
+    public modalCtrl: ModalController, 
+    public platform: Platform, 
+    private iab: InAppBrowser) {
+    this.eos = Eos(settings.getEosConfig());
     this.loadData();
 
   }
 
   refresh(_order) {
+    // Confirm chain config
+    this.eos = Eos(this.settings.getEosConfig());
+
     this.order = _order;
     this.loadData();
   }
 
-  presentLoading(){
-    this.loading = this.loadingCtrl.create({ content: 'Please wait...'});
+  presentLoading() {
+    this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
     this.loading.present();
   }
 
   openItem(id) {
-    this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
+    this.iab.create(this.eosConfig.chainExplorerTxnUrl + id, "_blank");
   }
 
   loadData() {
     this.presentLoading();
     this.eos['getActions']({
-      account_name: this.accountname,
+      account_name: this.settings.accountName,
       offset: -500,
       pos: -1
     }).then((data) => {
       console.log(data);
-      if(this.order)
+      if (this.order)
         this.acts = data.actions.reverse();
       else
         this.acts = data.actions;

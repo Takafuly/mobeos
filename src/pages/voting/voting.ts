@@ -18,27 +18,27 @@ export class VotingPage {
   votinglist: any = [];
   eos: any;
   loading: any;
-  accountname: any;
+  accountName: any;
   searchInput: any;
 
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-              public alertCtrl: AlertController, private iab: InAppBrowser, public settings: Settings) {
-    this.loading = this.loadingCtrl.create({ content: 'Please wait...'});
+    public alertCtrl: AlertController, private iab: InAppBrowser, public settings: Settings) {
+    this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
     let config = settings.getEosConfig();
     this.eos = Eos(config);
-    this.accountname = this.settings.accountname;
+    this.accountName = this.settings.accountName;
     this.ionViewDidLoad();
 
   }
 
   ionViewDidLoad() {
-    this.eos['getProducers']({json: true, limit: 200}, (error, result) => {
-      if(error)
+    this.eos['getProducers']({ json: true, limit: 200 }, (error, result) => {
+      if (error)
         console.log(error)
-      if(result){
+      if (result) {
         this.listProducers = result.rows;
-        this.listProducers.forEach(function(obj) { obj.checked = false;});
+        this.listProducers.forEach(function (obj) { obj.checked = false; });
         this.votinglist = [];
         this.shuffleList(this.listProducers);
         console.log(this.listProducers);
@@ -63,9 +63,9 @@ export class VotingPage {
         {
           text: 'OK',
           handler: data => {
-            if(this.votinglist.length+data.length > 30)
+            if (this.votinglist.length + data.length > 30)
               this.presentAlert("You have exceeded the maximum number (30) of BPs for voting");
-            else{
+            else {
               this.votinglist = this.votinglist.concat(data);
             }
             //this.settings.setAccountName(data);
@@ -76,28 +76,28 @@ export class VotingPage {
     };
 
     options.inputs = [];
-    for(let i=0; i< this.searchedProducers.length; i++) {
-      options.inputs.push({ name : 'options', value: this.searchedProducers[i].owner, label: this.searchedProducers[i].owner, type: 'checkbox' });
+    for (let i = 0; i < this.searchedProducers.length; i++) {
+      options.inputs.push({ name: 'options', value: this.searchedProducers[i].owner, label: this.searchedProducers[i].owner, type: 'checkbox' });
     }
     let alert = this.alertCtrl.create(options);
     alert.present();
   }
 
   onInput() {
-    if(this.searchInput != ''){
+    if (this.searchInput != '') {
       this.presentLoading();
       this.searchedProducers = [];
       console.log(this.searchInput);
       let searchTerm = this.searchInput;
       let tempProducers = this.searchedProducers;
 
-      this.eos['getProducers']({json: true, limit: 500}, (error, result) => {
-        if(error)
+      this.eos['getProducers']({ json: true, limit: 500 }, (error, result) => {
+        if (error)
           this.loading.dismiss();
-        if(result){
+        if (result) {
           //this.searchedProducers = result.rows;
           let searchResult = result.rows;
-          searchResult.forEach(function(obj) {
+          searchResult.forEach(function (obj) {
             if ((obj.owner).includes(searchTerm)) {
               tempProducers.push(obj);
             }
@@ -112,7 +112,7 @@ export class VotingPage {
   }
 
   presentLoading() {
-    this.loading = this.loadingCtrl.create({ content: 'Please wait...'});
+    this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
     this.loading.present();
   }
 
@@ -146,7 +146,7 @@ export class VotingPage {
         {
           text: 'Set',
           handler: data => {
-            if(data.proxy != '')
+            if (data.proxy != '')
               this.setProxy(data.proxy);
           }
         }
@@ -159,27 +159,27 @@ export class VotingPage {
 
     return new Promise((resolve, reject) => {
 
-        let confirm = this.alertCtrl.create({
-          title: '',
-          message: message,
-          buttons: [{
-            text: 'CANCEL',
-            handler: () => {
-              reject();
-            }
-          }, {
-            text: 'OK',
-            handler: () => {
-              resolve(true);
-            }
-          }]
-        });
+      let confirm = this.alertCtrl.create({
+        title: '',
+        message: message,
+        buttons: [{
+          text: 'CANCEL',
+          handler: () => {
+            reject();
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+            resolve(true);
+          }
+        }]
+      });
 
-        confirm.present();
+      confirm.present();
     });
   }
 
-  presentConfirm(msg,id) {
+  presentConfirm(msg, id) {
     let alert = this.alertCtrl.create({
       title: 'Successful Transaction',
       message: msg,
@@ -194,7 +194,7 @@ export class VotingPage {
         {
           text: 'View',
           handler: () => {
-            this.iab.create("https://eospark.com/MainNet/tx/"+id,"_blank");
+            this.iab.create(this.settings.chainConfig.chainExplorerTxnUrl + id, "_blank");
           }
         }
       ]
@@ -205,23 +205,23 @@ export class VotingPage {
 
   shuffleList(list) {
     for (var i = list.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = list[i];
-        list[i] = list[j];
-        list[j] = temp;
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = list[i];
+      list[i] = list[j];
+      list[j] = temp;
     }
     return list;
   }
 
 
   updatelist(producer) {
-    producer.checked = ! producer.checked;
-    if(producer.checked == true){
+    producer.checked = !producer.checked;
+    if (producer.checked == true) {
       this.votinglist.push(producer.owner);
-      if(this.votinglist.length == 30)
+      if (this.votinglist.length == 30)
         this.presentAlert("You have selected the maximum number (30) of BPs for voting");
     }
-    else{
+    else {
       var index = this.votinglist.indexOf(producer.owner);
       this.votinglist.splice(index, 1);;
     }
@@ -235,45 +235,45 @@ export class VotingPage {
   }
 
   castvote() {
-    if(this.votinglist.length > 0 && this.votinglist.length < 31){
+    if (this.votinglist.length > 0 && this.votinglist.length < 31) {
       this.showConfirm("This will cast a vote for the selected BPs").
-      then((data) => {
-        this.presentLoading();
-        this.votinglist.sort();
-        this.eos.transaction(tr => {
-          tr.voteproducer({
-            voter: this.accountname,
-            proxy: "",
-            producers: this.votinglist,
-          })
-        }).then((data) => {
-          this.loading.dismiss();
-          this.ionViewDidLoad();
-          this.presentConfirm("This was a successful vote, do you want to view details of the action at eospark.com?",data.transaction_id);
-        }).catch((e) => {
-          this.loading.dismiss();
-          this.presentAlert(e.message);
-        });
-      }).catch((e) => {console.log(e);});
+        then((data) => {
+          this.presentLoading();
+          this.votinglist.sort();
+          this.eos.transaction(tr => {
+            tr.voteproducer({
+              voter: this.accountName,
+              proxy: "",
+              producers: this.votinglist,
+            })
+          }).then((data) => {
+            this.loading.dismiss();
+            this.ionViewDidLoad();
+            this.presentConfirm("This was a successful vote, do you want to view details of the action at eospark.com?", data.transaction_id);
+          }).catch((e) => {
+            this.loading.dismiss();
+            this.presentAlert(e.message);
+          });
+        }).catch((e) => { console.log(e); });
     } else
       this.presentAlert("voting list should contain a number of BPs between 1 and 30");
   }
 
   setProxy(proxyName) {
-        this.presentLoading();
-        this.eos.transaction(tr => {
-          tr.voteproducer({
-            voter: this.accountname,
-            proxy: proxyName,
-          })
-        }).then((data) => {
-          this.loading.dismiss();
-          this.ionViewDidLoad();
-          this.presentConfirm("You have sucussfully set a proxy for voting, do you want to view details of the action at eospark.com?",data.transaction_id);
-        }).catch((e) => {
-          this.loading.dismiss();
-          this.presentAlert(e.message);
-        });
+    this.presentLoading();
+    this.eos.transaction(tr => {
+      tr.voteproducer({
+        voter: this.accountName,
+        proxy: proxyName,
+      })
+    }).then((data) => {
+      this.loading.dismiss();
+      this.ionViewDidLoad();
+      this.presentConfirm("You have sucussfully set a proxy for voting, do you want to view details of the action at eospark.com?", data.transaction_id);
+    }).catch((e) => {
+      this.loading.dismiss();
+      this.presentAlert(e.message);
+    });
   }
 
 

@@ -19,8 +19,8 @@
   <ion-list *ngFor="let act of acts">
 
     <ion-item  *ngIf="act.action_trace.act.name == 'transfer' && act.action_trace.act.data.from " (click)="openItem(act.action_trace.trx_id)">
-      <ion-icon name="arrow-dropleft-circle" color="primary" *ngIf="act.action_trace.act.data.from == accountname" item-start></ion-icon>
-      <ion-icon name="arrow-dropright-circle" color="secondary" *ngIf="act.action_trace.act.data.to == accountname" item-start></ion-icon>
+      <ion-icon name="arrow-dropleft-circle" color="primary" *ngIf="act.action_trace.act.data.from == accountName" item-start></ion-icon>
+      <ion-icon name="arrow-dropright-circle" color="secondary" *ngIf="act.action_trace.act.data.to == accountName" item-start></ion-icon>
 
           <h3>{{ act.action_trace.act.data.from }} -> {{ act.action_trace.act.data.to }}</h3>
           <h3><u>{{ act.action_trace.act.data.quantity }}</u></h3>

@@ -17,6 +17,7 @@ import { MyApp } from './app.component';
 
 import * as Eos from 'eosjs';
 
+export const CHAIN_STORAGE_KEY = 'chain';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.

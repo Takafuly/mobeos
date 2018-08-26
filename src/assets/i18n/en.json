@@ -1,6 +1,8 @@
 {
   "BACK_BUTTON_TEXT": "Back",
 
+  "CONNECT_TO_EOS": "Connect to EOS Blockchain",
+
   "NAME": "Name",
   "EMAIL": "Email",
   "USERNAME": "Username",
@@ -16,14 +18,19 @@
   "TAB6_TITLE": "Actions",
 
   "MAP_TITLE": "Map",
-
-
-
   "WELCOME_INTRO": "Manage your EOS account from your smart phone",
-
-
-
   "WELCOME_TITLE": "Welcome",
+
+  "PLEASE_WAIT": "Please wait...", 
+  "ENTER_ABOVE_ZERO":"Enter an amount above 0",
+  "ENTER_BELOW_STAKE":"Enter an amount less than the total staked balance",
+  "ENTER_BELOW_BALANCE":"Enter an amount less than the available balance",
+  "SUCCESSFUL_STAKING":"Successful Staking, do you want to view details in a live Block Explorer?",
+  "SUCCESSFUL_UNSTAKING":"Successful Unstaking, do you want to view details in a live Block Explorer?",
+  "SUCCESSFUL_TXN": "Successful Transaction",
+  "ERROR": "Error",
+  "SPECIFY_STAKE_AMOUNT": "Specify an amount to stake",
+  "SPECIFY_UNSTAKE_AMOUNT": "Specify an amount to unstake",
 
   "LOGIN_TITLE": "Continue to Wallet",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
@@ -33,7 +40,7 @@
   "SIGNUP_BUTTON": "Proceed",
 
   "LIST_MASTER_TITLE": "Main",
-
+  "TOKENS": "TOKENS",
   "ITEM_CREATE_TITLE": "New Account",
 
   "ITEM_NAME_PLACEHOLDER": "Name",

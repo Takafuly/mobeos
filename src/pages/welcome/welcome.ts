@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Settings } from '../../providers/providers';
+import { STORAGE_KEYS } from '../../providers/config';
 import * as Eos from 'eosjs';
 
 
@@ -9,31 +11,42 @@ import * as Eos from 'eosjs';
   selector: 'page-welcome',
   templateUrl: 'welcome.html'
 })
+
 export class WelcomePage {
   loading: any;
   eos: any;
+  chain: any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-              public settings: Settings, public alertCtrl: AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    public loadingCtrl: LoadingController,
+    public settings: Settings,
+    public alertCtrl: AlertController,
+    public storage: Storage
+  ) {
 
-    this.connectEOS('https://eu1.eosdac.io:443');
+    this.connectEOS(settings.chainConfig);
   }
 
-  connectEOS(endpoint) {
-    let config = {
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
-        httpEndpoint: endpoint,
-        expireInSeconds: 60,
-        broadcast: true,
-        verbose: false, // API activity
-        sign: true
-      };
-    this.eos = Eos(config);
+  chainChosen(chain)
+  {
+    // Switch chain configuration
+    this.settings.setChainTo(this.chain);
+
+    console.log('Chain Switched to :: ' + this.chain);
+
+    // Update cached chain
+    this.storage.set(STORAGE_KEYS.CURRENT_CHAIN, this.chain);
+    this.connectEOS(this.settings.chainConfig);
+  }
+
+  connectEOS(chainConfig) {
+    this.eos = Eos(chainConfig);
     this.presentLoading();
     this.eos['getInfo']( (error, result) => {
       if(error){
         this.loading.dismiss();
-        this.presentPrompt("Error connecting to the EOS mainnet. Want to try with a different endpoint?");
+        this.presentPrompt('Error connecting to the ' + chainConfig.chainName + '. Want to try with a different endpoint?');
       } else {
         this.loading.dismiss();
       }
@@ -41,7 +54,7 @@ export class WelcomePage {
   }
 
   presentLoading(){
-    this.loading = this.loadingCtrl.create({ content: 'Connecting to EOS mainnet ...'});
+    this.loading = this.loadingCtrl.create({ content: 'Connecting to ' + this.settings.chainConfig.chainName + ' ...'});
     this.loading.present();
   }
 
@@ -66,7 +79,7 @@ export class WelcomePage {
         {
           text: 'Connect',
           handler: data => {
-            this.settings.setEosConifgEndpoint(data.endpoint);
+            this.settings.chainConfig.setEndpoint(data.endpoint);
             this.connectEOS(data.endpoint);
           }
         }
