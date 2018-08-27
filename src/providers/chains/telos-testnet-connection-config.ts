@@ -12,8 +12,14 @@ export class TelosTestnetConnectionConfig {
     tokensList: any;
     keyProvider: any;
     chainExplorerTxnUrl: any;
+    pKeyPrefix: string;
+    systemTokenName: string;
+    mainContractName: string;
 
     constructor() {
+        this.pKeyPrefix = 'TLOS';
+        this.systemTokenName = 'TLOS';
+        this.mainContractName = 'tlos.token';
         this.chainName = "TELOS Testnet";
         this.chainId = '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207'; // 32 byte (64 char) hex string
         this.httpEndpoint = 'http://144.202.89.120:8888'; // Telos Testnet Endpoint

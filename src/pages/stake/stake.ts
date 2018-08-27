@@ -28,6 +28,7 @@ export class StakePage {
   loading: any;
   accountName: any;
   translationItems: any;
+  mainTokenName: any;
 
   constructor(
     public navCtrl: NavController,
@@ -64,6 +65,7 @@ export class StakePage {
     translate.get('SPECIFY_STAKE_AMOUNT').subscribe(value => {this.translationItems['SPECIFY_STAKE_AMOUNT'] = value;});
     translate.get('SPECIFY_UNSTAKE_AMOUNT').subscribe(value => {this.translationItems['SPECIFY_UNSTAKE_AMOUNT'] = value;});
 
+    this.mainTokenName = this.settings.getChainPKeyPrefix();
     this.loading = this.loadingCtrl.create({ content: this.translationItems['PLEASE_WAIT'] });
     let config = settings.getEosConfig();
     this.eos = Eos(config);

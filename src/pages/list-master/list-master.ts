@@ -39,9 +39,12 @@ export class ListMasterPage {
   accountName: any;
   loading: any;
   apiUrl: any = GET_TOKEN_URL;
+  mainTokenName: any;
 
   constructor(public navCtrl: NavController, public settings: Settings, public modalCtrl: ModalController,
               public loadingCtrl: LoadingController, public _http: HttpClient) {
+
+    this.mainTokenName = this.settings.getChainPKeyPrefix();
     let config = settings.getEosConfig();
     this.eos = Eos(config);
     this.accountName = this.settings.accountName;

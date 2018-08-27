@@ -88,11 +88,16 @@ export class SignupPage {
 
   doSignup() {
       if(this.ecc.isValidPrivate(this.pk)){
-        //console.log("valid pk");
+        console.log('valid pk');
         let pubkey = this.ecc.privateToPublic(this.pk);
-        //console.log(pubkey);
+
         if (this.ecc.isValidPublic(pubkey)) {
-          //console.log(this.settings.getEosConfig());
+          
+          // Check if public key format is prefixed differently
+          if(this.settings.getEosConfig().pKeyPrefix != 'EOS'){
+            pubkey = pubkey.replace('EOS', this.settings.getEosConfig().pKeyPrefix);
+          }
+
           this.eos.getKeyAccounts(pubkey)
           .then((data) => {
             if (data['account_names'].length > 0) {

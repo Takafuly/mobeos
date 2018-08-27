@@ -18,28 +18,32 @@ export class TransferPage {
   receiver_acct: any = '';
   amount_2send: any = '';
   memo: any = '';
-  tokenname: any = 'EOS';
   token_contract = 'eosio.token'
   loading: any;
   accountName: any;
+  mainTokenName: string;
+  token_name: string;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController, private iab: InAppBrowser, public settings: Settings) {
-    this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
-    let config = settings.getEosConfig();
-    this.eos = Eos(config);
-    this.accountName = this.settings.accountName;
-    this.ionViewDidLoad();
+
+      this.mainTokenName = this.settings.getChainTokenName();
+      this.token_name = this.mainTokenName;
+      this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
+      let config = settings.getEosConfig();
+      this.eos = Eos(config);
+      this.accountName = this.settings.accountName;
+      this.ionViewDidLoad();
 
   }
 
   ionViewDidLoad() {
+    this.token_name = this.mainTokenName;
     this.sender_acct = this.accountName;
     this.receiver_acct = '';
     this.amount_2send = '';
     this.memo = '';
-    this.tokenname = 'EOS';
-    this.token_contract = 'eosio.token';
+    this.token_contract = this.settings.getChainTokenContractName();
     this.eos['getAccount'](this.accountName, (error, result) => {
       if (error) {
         this.presentAlert(error.message);
@@ -112,13 +116,13 @@ export class TransferPage {
   }
 
   send() {
-    if (this.tokenname == 'EOS') {
+    if (this.token_name == 'EOS') {
       if (this.amount_2send > 0 && this.amount_2send <= this.available_balance) {
         if (this.sender_acct && this.receiver_acct) {
-          this.showConfirm("This will transfer " + this.amount_2send + " " + this.tokenname + " from " + this.sender_acct + " to " + this.receiver_acct).
+          this.showConfirm("This will transfer " + this.amount_2send + " " + this.token_name + " from " + this.sender_acct + " to " + this.receiver_acct).
             then((data) => {
               this.presentLoading();
-              this.eos.transfer({ from: this.sender_acct, to: this.receiver_acct, quantity: ((parseFloat(this.amount_2send)).toFixed(4) + ' ' + this.tokenname), memo: this.memo }, (error, result) => {
+              this.eos.transfer({ from: this.sender_acct, to: this.receiver_acct, quantity: ((parseFloat(this.amount_2send)).toFixed(4) + ' ' + this.token_name), memo: this.memo }, (error, result) => {
                 if (result) {
                   this.loading.dismiss();
                   this.ionViewDidLoad();
@@ -138,7 +142,7 @@ export class TransferPage {
       this.eos.contract(this.token_contract, (err, tknContract) => {
         if (!err) {
           if (tknContract['transfer']) {
-            tknContract['transfer'](this.sender_acct, this.receiver_acct, this.amount_2send + ' ' + this.tokenname, this.memo, (err2, result) => {
+            tknContract['transfer'](this.sender_acct, this.receiver_acct, this.amount_2send + ' ' + this.token_name, this.memo, (err2, result) => {
               if (err2) {
                 this.presentAlert((err2.message));
               } else {

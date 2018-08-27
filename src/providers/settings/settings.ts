@@ -13,18 +13,24 @@ export class Settings {
 
   chainConfig: any = {};
   accountName: any;
+  cachedChainKey: any;
 
   constructor(public storage: Storage) {
-
+    this.checkCachedChain();
+  }
+  
+  checkCachedChain()
+  {
     this.storage.get(STORAGE_KEYS.CURRENT_CHAIN)
-      .then((val) => {
-        // Switch to cached chain
-        this.setChainTo(val);
-        console.log("cached is" + val);
-      }).catch(error => {
-        // Use default chain
-        this.chainConfig = EosConnectionConfig.getInstance();
-      });
+    .then((val) => {
+      // Switch to cached chain
+      this.setChainTo(val);
+      this.cachedChainKey = val;
+    }).catch(error => {
+      // Use default chain
+      this.chainConfig = EosConnectionConfig.getInstance();
+      this.cachedChainKey = 'eos';
+    });
   }
 
   setChainTo(chainKey: string)
@@ -32,14 +38,17 @@ export class Settings {
     switch(chainKey) { 
       case 'telos': { 
         this.chainConfig = TelosTestnetConnectionConfig.getInstance();
+        this.cachedChainKey = 'telos';
         break; 
       } 
       case 'jungle': { 
         this.chainConfig = EosTestnetConnectionConfig.getInstance(); 
+        this.cachedChainKey = 'jungle';
         break; 
       } 
       case 'eos': { 
         this.chainConfig = EosConnectionConfig.getInstance(); 
+        this.cachedChainKey = 'eos';
         break; 
       }
       default: { 
@@ -55,6 +64,21 @@ export class Settings {
 
   getEosConfig() {
     return this.chainConfig;
+  }
+
+  getChainPKeyPrefix()
+  {
+    return this.chainConfig.pKeyPrefix;
+  }
+
+  getChainTokenName()
+  {
+    return this.chainConfig.systemTokenName;
+  }
+
+  getChainTokenContractName()
+  {
+    return this.chainConfig.mainContractName;
   }
 
   setEosConfigPK(pk) {

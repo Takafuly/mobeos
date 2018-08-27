@@ -33,8 +33,6 @@ export class WelcomePage {
     // Switch chain configuration
     this.settings.setChainTo(this.chain);
 
-    console.log('Chain Switched to :: ' + this.chain);
-
     // Update cached chain
     this.storage.set(STORAGE_KEYS.CURRENT_CHAIN, this.chain);
     this.connectEOS(this.settings.chainConfig);
@@ -94,5 +92,10 @@ export class WelcomePage {
 
   signup() {
     this.navCtrl.push('SignupPage');
+  }
+
+  ionViewDidLoad() {
+    this.settings.checkCachedChain();
+    this.chain = this.settings.cachedChainKey;
   }
 }

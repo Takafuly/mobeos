@@ -24,12 +24,12 @@ export class RamPage {
   simple: any;
   loading: any;
   accountName: any;
+  mainTokenName: string;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController, private iab: InAppBrowser, public settings: Settings) {
-
-
-    this.ionViewDidLoad();
+      
+      this.mainTokenName = this.settings.getChainPKeyPrefix();
 
   }
 

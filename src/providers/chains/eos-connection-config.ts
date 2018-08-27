@@ -12,8 +12,14 @@ export class EosConnectionConfig {
     tokensList: any;
     keyProvider: any;
     chainExplorerTxnUrl: any;
+    pKeyPrefix: string;
+    systemTokenName: string;
+    mainContractName: string;
 
     constructor() {
+        this.pKeyPrefix = 'EOS';
+        this.systemTokenName = 'EOS';
+        this.mainContractName = 'eosio.token';
         this.chainName = "EOS Mainnet";
         this.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'; // 32 byte (64 char) hex string
         this.httpEndpoint = 'https://eu1.eosdac.io:443';
