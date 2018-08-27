@@ -15,7 +15,7 @@
     </ion-buttons>
     <ion-buttons end>
       <button ion-button round end (click)="listTokens()">
-        TOKENS
+        {{ 'TOKENS' | translate }}
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -34,13 +34,13 @@
   <ion-card>
     <ion-card-content>
       <h3><b>TOTAL BALANCE </b></h3>
-      {{ total_balance }} EOS
+      {{ total_balance }} {{mainTokenName}}
     </ion-card-content>
       <ion-row>
         <ion-col col-6>
           <ion-card-content>
             <h3><b>Staked </b></h3>
-            <h4> {{ staked_balance }} EOS </h4>
+            <h4> {{ staked_balance }} {{mainTokenName}} </h4>
             <circle-progress
               [percent]=staked_balance_percentage
               [radius]="50"
@@ -57,7 +57,7 @@
         <ion-col col-6>
           <ion-card-content>
             <h3><b>Unstaked</b></h3>
-            <h4> {{ unstaked_balance }} EOS</h4>
+            <h4> {{ unstaked_balance }} {{mainTokenName}}</h4>
             <circle-progress
               [percent]=unstaked_balance_percentage
               [radius]="50"

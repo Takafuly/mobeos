@@ -2,6 +2,12 @@
 
   <ion-navbar>
     <ion-title>{{ 'STAKE_TITLE' | translate }}</ion-title>
+
+    <ion-buttons start>
+      <button ion-button clear end icon-only (click)="lock()">
+        <ion-icon name="lock"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -13,7 +19,7 @@
   <ion-card>
     <ion-card-content>
       <h3><b>AVAILABLE BALANCE </b></h3>
-      {{ available_balance }} EOS
+      {{ available_balance }} {{ mainTokenName }}
     </ion-card-content>
     <ion-item>
       <ion-range pin=true min="0" max="100" [(ngModel)]="staking_percentage" color="primary" (ionBlur)="stakerangeChanged($event)">
@@ -24,13 +30,13 @@
     <ion-row>
       <ion-col col-6>
         <ion-item>
-          <ion-label color="primary" stacked>CPU Stake (EOS)</ion-label>
+          <ion-label color="primary" stacked>CPU Stake ({{ mainTokenName }})</ion-label>
           <ion-input type="number" [(ngModel)]="cpu_staking_value" (ionChange)="cpustakevalueChanged($event)"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-6>
         <ion-item>
-          <ion-label color="primary" stacked>BW Stake (EOS)</ion-label>
+          <ion-label color="primary" stacked>BW Stake ({{ mainTokenName }})</ion-label>
           <ion-input type="number" [(ngModel)]="net_staking_value" (ionChange)="netstakevalueChanged($event)"></ion-input>
         </ion-item>
       </ion-col>
@@ -42,7 +48,7 @@
   <ion-card>
     <ion-card-content>
       <h3><b> BALANCE @STAKE </b></h3>
-      CPU:{{ staked_cpu }} EOS/BW:{{staked_net}} EOS
+      CPU:{{ staked_cpu }} {{ mainTokenName }}/BW:{{staked_net}} {{ mainTokenName }}
     </ion-card-content>
     <ion-item>
       <ion-range pin=true min="0" max="100" [(ngModel)]="unstaking_percentage" color="secondary" (ionBlur)="unstakerangeChanged($event)">
@@ -53,13 +59,13 @@
     <ion-row>
       <ion-col col-6>
         <ion-item>
-          <ion-label color="secondary" stacked>CPU Unstake (EOS)</ion-label>
+          <ion-label color="secondary" stacked>CPU Unstake ({{ mainTokenName }})</ion-label>
           <ion-input type="number" [(ngModel)]="cpu_unstaking_value" (ionChange)="cpuunstakevalueChanged($event)"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-6>
         <ion-item>
-          <ion-label color="secondary" stacked>BW Unstake (EOS)</ion-label>
+          <ion-label color="secondary" stacked>BW Unstake ({{ mainTokenName }})</ion-label>
           <ion-input type="number" [(ngModel)]="net_unstaking_value" (ionChange)="netunstakevalueChanged($event)"></ion-input>
         </ion-item>
       </ion-col>

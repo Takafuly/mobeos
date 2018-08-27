@@ -2,6 +2,12 @@
 
   <ion-navbar>
     <ion-title> Transfer </ion-title>
+
+    <ion-buttons start>
+      <button ion-button clear end icon-only (click)="lock()">
+        <ion-icon name="lock"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -11,7 +17,7 @@
     <ion-card>
       <ion-card-content>
         <h2><b>Available Balance</b></h2>
-        <p>{{available_balance}} (EOS)</p>
+        <p>{{available_balance}} ({{mainTokenName}})</p>
       </ion-card-content>
     </ion-card>
 
@@ -30,10 +36,10 @@
         </ion-item>
         <ion-item>
           <ion-label color="primary" stacked>Token Symbol</ion-label>
-          <ion-input type="text" [(ngModel)]="tokenname"></ion-input>
+          <ion-input type="text" [(ngModel)]="token_name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" stacked>Amount to send ({{tokenname}})</ion-label>
+          <ion-label color="primary" stacked>Amount to send ({{token_name}})</ion-label>
           <ion-input type="number" [(ngModel)]="amount_2send"></ion-input>
         </ion-item>
         <ion-item>

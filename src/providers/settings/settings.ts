@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import {EosConnectionConfig} from '../chains/eos-connection-config';
+import {EosTestnetConnectionConfig} from '../chains/eos-testnet-connection-config'; 
+import {TelosTestnetConnectionConfig} from '../chains/telos-testnet-connection-config';
+import { STORAGE_KEYS } from '../config';
 
 /**
  * A simple settings/config class for storing key/value pairs with persistence.
@@ -7,80 +11,90 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Settings {
 
-  config: any = {};
-  accountname: any;
-  endpoint: any = 'https://eu1.eosdac.io:443';
-  tokensList: any = [];
-
-
+  chainConfig: any = {};
+  accountName: any;
+  cachedChainKey: any;
 
   constructor(public storage: Storage) {
-    this.config = {
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca', // 32 byte (64 char) hex string
-        httpEndpoint: 'https://eu1.eosdac.io:443',//'https://mainnet.genereos.io',//'http://jungle.cryptolions.io:38888',
-        expireInSeconds: 60,
-        broadcast: true,
-        verbose: true, // API activity
-        sign: true
-      };
+    this.checkCachedChain();
+  }
+  
+  checkCachedChain()
+  {
+    this.storage.get(STORAGE_KEYS.CURRENT_CHAIN)
+    .then((val) => {
+      // Switch to cached chain
+      this.setChainTo(val);
+      this.cachedChainKey = val;
+    }).catch(error => {
+      // Use default chain
+      this.chainConfig = EosConnectionConfig.getInstance();
+      this.cachedChainKey = 'eos';
+    });
+  }
 
+  setChainTo(chainKey: string)
+  {
+    switch(chainKey) { 
+      case 'telos': { 
+        this.chainConfig = TelosTestnetConnectionConfig.getInstance();
+        this.cachedChainKey = 'telos';
+        break; 
+      } 
+      case 'jungle': { 
+        this.chainConfig = EosTestnetConnectionConfig.getInstance(); 
+        this.cachedChainKey = 'jungle';
+        break; 
+      } 
+      case 'eos': { 
+        this.chainConfig = EosConnectionConfig.getInstance(); 
+        this.cachedChainKey = 'eos';
+        break; 
+      }
+      default: { 
+        this.chainConfig = EosConnectionConfig.getInstance();
+        break; 
+      } 
+   } 
   }
 
   getTokensList() {
-    this.tokensList = [
-      {symbol:'EOSDAC', contract:'eosdactokens'},
-      {symbol:'ADD', contract: 'eosadddddddd'},
-      {symbol:'EOX', contract: 'eoxeoxeoxeox'},
-      {symbol:'EDNA', contract: 'ednazztokens'},
-      {symbol:'ATD', contract: 'eosatidiumio'},
-      {symbol:'CET', contract: 'eosiochaince'},
-      {symbol:'HORUS', contract: 'horustokenio'},
-      {symbol:'KARMA', contract: 'therealkarma'},
-      {symbol:'ESB', contract: 'esbcointoken'},
-      {symbol:'IQ', contract: 'everipediaiq'},
-      {symbol:'CHL', contract: 'challengedac'}
-    ]
-    return this.tokensList;
+    return this.chainConfig.getTokensList();
   }
 
   getEosConfig() {
-    return this.config;
+    return this.chainConfig;
+  }
+
+  getChainPKeyPrefix()
+  {
+    return this.chainConfig.pKeyPrefix;
+  }
+
+  getChainTokenName()
+  {
+    return this.chainConfig.systemTokenName;
+  }
+
+  getChainTokenContractName()
+  {
+    return this.chainConfig.mainContractName;
   }
 
   setEosConfigPK(pk) {
-    this.config = {
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca', // 32 byte (64 char) hex string
-        keyProvider: [pk], // WIF string or array of keys..
-        httpEndpoint: this.endpoint,//'https://mainnet.genereos.io',//'http://jungle.cryptolions.io:38888',
-        expireInSeconds: 60,
-        broadcast: true,
-        verbose: true, // API activity
-        sign: true
-      };
-  }
-
-  setEosConifgEndpoint(endpoint) {
-    this.endpoint = endpoint;
-    this.config = {
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',//'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca', // 32 byte (64 char) hex string
-        httpEndpoint: this.endpoint,//'https://mainnet.genereos.io',//'http://jungle.cryptolions.io:38888',
-        expireInSeconds: 60,
-        broadcast: true,
-        verbose: true, // API activity
-        sign: true
-      };
+    this.chainConfig.setKeyProvider(pk);
   }
 
   getAccountName() {
-    return this.accountname;
+    return this.accountName;
   }
 
   setAccountName(acctName) {
-    this.accountname = acctName;
+    this.accountName = acctName;
   }
 
-  saveAccount(accountdata,key) {
-    this.storage.set(key, accountdata);
+  saveAccount(accountName,key) {
+    this.storage.set(key, accountName);
   }
 
   getAccount(key) {
@@ -95,6 +109,18 @@ export class Settings {
         data = null;
       });
       return data;
+  }
+
+  displayTab(display:boolean) {
+      let elements = document.querySelectorAll(".tabbar");
+
+      console.log("hide bar");
+
+      if (elements != null) {
+          Object.keys(elements).map((key) => {
+              elements[key].style.transform = display ? 'translateY(0)' : 'translateY(56px)';
+          });
+      }
   }
 
 }

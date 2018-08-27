@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title> RAM </ion-title>
+    <ion-buttons start>
+      <button ion-button clear end icon-only (click)="lock()">
+        <ion-icon name="lock"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -42,7 +47,7 @@
                   <ion-radio checked="checked" value="1"></ion-radio>
                 </ion-col>
                 <ion-col>
-                  <ion-label color="primary" stacked>EOS</ion-label>
+                  <ion-label color="primary" stacked>{{mainTokenName}}</ion-label>
                 </ion-col>
               </ion-row>
             </ion-col>

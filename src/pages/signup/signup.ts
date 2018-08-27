@@ -30,18 +30,10 @@ export class SignupPage {
     public settings: Settings,
     public storage: Storage,
     public translateService: TranslateService) {
-      //let config = settings.getEosConfig();
-      let config = {
-          chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906', // 32 byte (64 char) hex string
-          httpEndpoint: 'https://eu1.eosdac.io:443',//'http://jungle.cryptolions.io:38888',
-          expireInSeconds: 60,
-          broadcast: true,
-          verbose: false, // API activity
-          sign: true
-        };
-      this.eos = Eos(config);
-      this.ecc = Eos.modules['ecc'];
-      console.log(this.settings.getTokensList());
+
+    this.eos = Eos(settings.chainConfig);
+    this.ecc = Eos.modules['ecc'];
+    console.log(this.settings.getTokensList());
   }
 
   generateKey(p){
@@ -96,11 +88,16 @@ export class SignupPage {
 
   doSignup() {
       if(this.ecc.isValidPrivate(this.pk)){
-        //console.log("valid pk");
+        console.log('valid pk');
         let pubkey = this.ecc.privateToPublic(this.pk);
-        //console.log(pubkey);
+
         if (this.ecc.isValidPublic(pubkey)) {
-          //console.log(this.settings.getEosConfig());
+          
+          // Check if public key format is prefixed differently
+          if(this.settings.getEosConfig().pKeyPrefix != 'EOS'){
+            pubkey = pubkey.replace('EOS', this.settings.getEosConfig().pKeyPrefix);
+          }
+
           this.eos.getKeyAccounts(pubkey)
           .then((data) => {
             if (data['account_names'].length > 0) {

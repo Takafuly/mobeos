@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, LoadingController } from 'ionic-angular';
-import { NgCircleProgressModule } from 'ng-circle-progress';
-import { Http, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import { Settings } from '../../providers/providers';
 import { FirstRunPage } from '../pages';
 import * as Eos from 'eosjs';
+import { GET_TOKEN_URL } from '../../providers/config';
 
 
 @IonicPage()
@@ -37,15 +36,18 @@ export class ListMasterPage {
   tokensname: any = [];
   tokensvalue: any = [];
   tokensList: any = [];
-  accountname: any;
+  accountName: any;
   loading: any;
-  apiUrl: any = "http://mobeostest.herokuapp.com/tokens/";
+  apiUrl: any = GET_TOKEN_URL;
+  mainTokenName: any;
 
   constructor(public navCtrl: NavController, public settings: Settings, public modalCtrl: ModalController,
               public loadingCtrl: LoadingController, public _http: HttpClient) {
+
+    this.mainTokenName = this.settings.getChainPKeyPrefix();
     let config = settings.getEosConfig();
     this.eos = Eos(config);
-    this.accountname = this.settings.accountname;
+    this.accountName = this.settings.accountName;
     this.tokensList = this.settings.getTokensList();
     this.loadData();
 
@@ -64,7 +66,7 @@ export class ListMasterPage {
 
   addAccount() {
 
-    let addModal = this.modalCtrl.create('AccountCreatePage',{eos:this.eos,acct:this.accountname});
+    let addModal = this.modalCtrl.create('AccountCreatePage',{eos:this.eos,acct:this.accountName});
     addModal.present();
   }
 
@@ -72,7 +74,7 @@ export class ListMasterPage {
   loadData() {
     this.presentLoading();
     this.tokens = [];
-    this.eos['getAccount'](this.accountname, (error, result) => {
+    this.eos['getAccount'](this.accountName, (error, result) => {
       if(error){
         console.log(error);
         this.loading.dismiss();
@@ -101,18 +103,18 @@ export class ListMasterPage {
       this.tokensList = data;
       console.log(this.tokensList);
       for (var i = 0; i < this.tokensList.length; i++) {
-        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountname,this.tokens);
+        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountName,this.tokens);
       }
       this.loading.dismiss();
     }).catch((e) => {
       console.log("tokens");
       for (var i = 0; i < this.tokensList.length; i++) {
-        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountname,this.tokens);
+        this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountName,this.tokens);
       }
       this.loading.dismiss();
     });
     // for (var i = 0; i < this.tokensList.length; i++) {
-    //   this.getTokenBalance(this.tokensList[i].contract,this.eos,this.accountname,this.tokens);
+    //   this.getTokenBalance(this.tokensList[i].contract,this.eos,this.accountName,this.tokens);
     // }
 
   }
@@ -141,7 +143,10 @@ export class ListMasterPage {
   }
 
   lock() {
-     this.navCtrl.push(FirstRunPage);
+    this.navCtrl.push(FirstRunPage);
+    
+    // Hide Bottom Tab bar
+    this.settings.displayTab(false);
   }
 
   refresh() {
