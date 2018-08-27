@@ -25,8 +25,6 @@ export class Settings {
         // Use default chain
         this.chainConfig = EosConnectionConfig.getInstance();
       });
-
-      console.log("1");
   }
 
   setChainTo(chainKey: string)
@@ -87,6 +85,18 @@ export class Settings {
         data = null;
       });
       return data;
+  }
+
+  displayTab(display:boolean) {
+      let elements = document.querySelectorAll(".tabbar");
+
+      console.log("hide bar");
+
+      if (elements != null) {
+          Object.keys(elements).map((key) => {
+              elements[key].style.transform = display ? 'translateY(0)' : 'translateY(56px)';
+          });
+      }
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Nav, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Settings } from '../../providers/providers';
+import { FirstRunPage } from '../pages';
 
 import * as Eos from 'eosjs';
 
@@ -152,6 +153,13 @@ export class TransferPage {
         }
       });
     }
+  }
+
+  lock() {
+    this.navCtrl.push(FirstRunPage);
+    
+    // Hide Bottom Tab bar
+    this.settings.displayTab(false);
   }
 
 }

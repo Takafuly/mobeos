@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Settings } from '../../providers/providers';
 import { TranslateService } from '@ngx-translate/core';
+import { FirstRunPage } from '../pages';
 
 import * as Eos from 'eosjs';
 
@@ -285,6 +286,13 @@ export class StakePage {
         }).catch((e) => { console.log(e); });
     } else
       this.presentAlert(this.translationItems['SPECIFY_UNSTAKE_AMOUNT']);
+  }
+
+  lock() {
+      this.navCtrl.push(FirstRunPage);
+      
+      // Hide Bottom Tab bar
+      this.settings.displayTab(false);
   }
 
 }

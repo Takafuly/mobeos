@@ -3,3 +3,5 @@ export let STORAGE_KEYS = {
 };
 
 export let GET_TOKEN_URL = 'http://mobeostest.herokuapp.com/tokens/';
+
+// Add global verbose parameter for API

@@ -140,7 +140,10 @@ export class ListMasterPage {
   }
 
   lock() {
-     this.navCtrl.push(FirstRunPage);
+    this.navCtrl.push(FirstRunPage);
+    
+    // Hide Bottom Tab bar
+    this.settings.displayTab(false);
   }
 
   refresh() {

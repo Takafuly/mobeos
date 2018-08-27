@@ -2,7 +2,7 @@
 <widget id="net.takafuly.mobeos" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MOBEOS</name>
     <description>EOS Mobile Toolkit</description>
-    <author email="asghaier76@gmail.com" href="http://ionicframework.com/">Takafuly</author>
+    <author email="asghaier76@gmail.com" href="https://www.takafuly.net/">Takafuly</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

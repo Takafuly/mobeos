@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, MenuController, ModalController, NavController, LoadingController, Platform } from 'ionic-angular';
 import { Settings } from '../../providers/providers';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { FirstRunPage } from '../pages';
+
 import * as Eos from 'eosjs';
+
 import { TranslateService } from '@ngx-translate/core';
 
 export interface Slide {
@@ -55,7 +58,7 @@ export class HistoryPage {
   }
 
   openItem(id) {
-    this.iab.create(this.eosConfig.chainExplorerTxnUrl + id, "_blank");
+    this.iab.create(this.settings.chainConfig.chainExplorerTxnUrl + id, "_blank");
   }
 
   loadData() {
@@ -78,9 +81,11 @@ export class HistoryPage {
   }
 
 
-  ionViewDidEnter() {
-
+  lock() {
+    this.navCtrl.push(FirstRunPage);
+    
+    // Hide Bottom Tab bar
+    this.settings.displayTab(false);
   }
-
 
 }

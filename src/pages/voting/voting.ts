@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Settings } from '../../providers/providers';
+import { FirstRunPage } from '../pages';
 
 import * as Eos from 'eosjs';
 
@@ -276,6 +277,12 @@ export class VotingPage {
     });
   }
 
+  lock() {
+    this.navCtrl.push(FirstRunPage);
+    
+    // Hide Bottom Tab bar
+    this.settings.displayTab(false);
+  }
 
   refresh() {
     this.ionViewDidLoad();
