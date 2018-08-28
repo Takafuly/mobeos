@@ -1,6 +1,6 @@
 // Singleton pattern
 export class TelosTestnetConnectionConfig {
-    
+
     private static instance: TelosTestnetConnectionConfig;
     chainName: string;
     chainId: any;
@@ -39,6 +39,11 @@ export class TelosTestnetConnectionConfig {
     getTokensList()
     {
         return this.tokensList;
+    }
+
+    setTokensList(_tokensList)
+    {
+        this.tokensList = _tokensList;
     }
 
     setEndpoint(httpEndpoint: string)

@@ -1,6 +1,6 @@
 // Singleton pattern
 export class EosConnectionConfig {
-    
+
     private static instance: EosConnectionConfig;
     chainName: string;
     chainId: any;
@@ -46,6 +46,11 @@ export class EosConnectionConfig {
     getTokensList()
     {
         return this.tokensList;
+    }
+
+    setTokensList(_tokensList)
+    {
+        this.tokensList = _tokensList;
     }
 
     setKeyProvider(pk: any)

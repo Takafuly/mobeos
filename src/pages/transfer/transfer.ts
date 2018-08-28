@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Nav, NavController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, Nav, NavController, LoadingController, AlertController, NavParams } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Settings } from '../../providers/providers';
 import { FirstRunPage } from '../pages';
@@ -18,17 +18,20 @@ export class TransferPage {
   receiver_acct: any = '';
   amount_2send: any = '';
   memo: any = '';
-  token_contract = 'eosio.token'
+  token_contract = 'eosio.token';
+  tokensList: any = [];
   loading: any;
   accountName: any;
+  mainContractName: string;
   mainTokenName: string;
   token_name: string;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams,
     public alertCtrl: AlertController, private iab: InAppBrowser, public settings: Settings) {
-
       this.mainTokenName = this.settings.getChainTokenName();
-      this.token_name = this.mainTokenName;
+      this.mainContractName = this.settings.getChainTokenContractName();
+
+      //this.tokensList = this.settings.getTokensList();
       this.loading = this.loadingCtrl.create({ content: 'Please wait...' });
       let config = settings.getEosConfig();
       this.eos = Eos(config);
@@ -39,19 +42,31 @@ export class TransferPage {
 
   ionViewDidLoad() {
     this.token_name = this.mainTokenName;
+    this.token_contract = this.mainContractName;
     this.sender_acct = this.accountName;
     this.receiver_acct = '';
     this.amount_2send = '';
     this.memo = '';
-    this.token_contract = this.settings.getChainTokenContractName();
-    this.eos['getAccount'](this.accountName, (error, result) => {
-      if (error) {
-        this.presentAlert(error.message);
-      }
-      if (result) {
-        this.available_balance = parseFloat(result.core_liquid_balance);
-      }
+    this.tokensList = [{symbol:this.mainTokenName,contract:this.token_contract}];
+    this.tokensList = this.tokensList.concat(this.settings.getTokensList());
+    if(this.navParams.get('token')){
+      this.token_name = (this.navParams.get('token'));
+      this.tokenChange();
+    }
+    this.eos['getCurrencyBalance'](this.token_contract, this.accountName, (error, result) => {
+        if(result){
+          if(result[0])
+            this.available_balance = result[0];
+        }
     });
+    // this.eos['getAccount'](this.accountName, (error, result) => {
+    //   if (error) {
+    //     this.presentAlert(error.message);
+    //   }
+    //   if (result) {
+    //     this.available_balance = parseFloat(result.core_liquid_balance);
+    //   }
+    // });
   }
 
   presentLoading() {
@@ -116,7 +131,7 @@ export class TransferPage {
   }
 
   send() {
-    if (this.token_name == 'EOS') {
+    if (this.token_name == 'EOS' || this.token_name == 'TLOS') {
       if (this.amount_2send > 0 && this.amount_2send <= this.available_balance) {
         if (this.sender_acct && this.receiver_acct) {
           this.showConfirm("This will transfer " + this.amount_2send + " " + this.token_name + " from " + this.sender_acct + " to " + this.receiver_acct).
@@ -161,9 +176,29 @@ export class TransferPage {
 
   lock() {
     this.navCtrl.push(FirstRunPage);
-    
+
     // Hide Bottom Tab bar
     this.settings.displayTab(false);
+  }
+
+  tokenChange(){
+    if(this.token_name === this.mainTokenName){
+        this.token_contract = this.mainContractName;
+    } else {
+        let index = this.tokensList.findIndex(tkn => tkn.symbol === this.token_name);
+        this.token_contract = this.tokensList[index].contract;
+    }
+    this.eos['getCurrencyBalance'](this.token_contract, this.accountName, (error, result) => {
+        if(result){
+          if(result[0])
+            this.available_balance = result[0];
+          else{
+              this.presentAlert('No such token contract');
+              this.token_name = this.mainTokenName;
+              this.tokenChange();
+          }
+        }
+    });
   }
 
 }

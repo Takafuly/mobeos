@@ -1,6 +1,6 @@
 // Singleton pattern
 export class EosTestnetConnectionConfig {
-    
+
     private static instance: EosTestnetConnectionConfig;
     chainName: string;
     chainId: any;
@@ -56,6 +56,11 @@ export class EosTestnetConnectionConfig {
     getTokensList()
     {
         return this.tokensList;
+    }
+
+    setTokensList(_tokensList)
+    {
+        this.tokensList = _tokensList;
     }
 
     static getInstance() {

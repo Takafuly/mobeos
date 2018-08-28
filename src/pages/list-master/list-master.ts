@@ -101,13 +101,13 @@ export class ListMasterPage {
     this.getTokensData()
     .then(data => {
       this.tokensList = data;
+      this.settings.setTokensList(this.tokensList);
       console.log(this.tokensList);
       for (var i = 0; i < this.tokensList.length; i++) {
         this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountName,this.tokens);
       }
       this.loading.dismiss();
     }).catch((e) => {
-      console.log("tokens");
       for (var i = 0; i < this.tokensList.length; i++) {
         this.getTokenBalance(this.tokensList[i].contract,this.tokensList[i].url,this.eos,this.accountName,this.tokens);
       }
@@ -124,10 +124,10 @@ export class ListMasterPage {
     return new Promise((resolve, reject) => {
       this._http.get(this.apiUrl,{headers: new HttpHeaders().set('Authorization', 'Basic YWRtaW46bW9ibW9iZW9zZW9z')}).
       subscribe(data => {
-        console.log(data);
+        //console.log(data);
         resolve(data);
       }, err => {
-        console.log(err);
+        //console.log(err);
         reject(err);
       });
     });
@@ -144,7 +144,7 @@ export class ListMasterPage {
 
   lock() {
     this.navCtrl.push(FirstRunPage);
-    
+
     // Hide Bottom Tab bar
     this.settings.displayTab(false);
   }

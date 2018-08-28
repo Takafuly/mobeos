@@ -22,4 +22,8 @@ export class TokensPage {
     this.viewCtrl.dismiss();
   }
 
+  sendToken(_token) {
+    this.navCtrl.push('TransferPage',{token: (_token.bal.split(' '))[1]});
+  }
+
 }

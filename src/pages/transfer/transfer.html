@@ -17,7 +17,7 @@
     <ion-card>
       <ion-card-content>
         <h2><b>Available Balance</b></h2>
-        <p>{{available_balance}} ({{mainTokenName}})</p>
+        <p>{{available_balance}}</p>
       </ion-card-content>
     </ion-card>
 
@@ -31,12 +31,16 @@
           <ion-input type="text" [(ngModel)]="sender_acct"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" stacked>Token Contract</ion-label>
-          <ion-input type="text" [(ngModel)]="token_contract"></ion-input>
+          <ion-label color="primary" stacked>Token Symbol</ion-label>
+          <ion-select item-right [(ngModel)]="token_name" (ionChange)="tokenChange();">
+          <ion-option *ngFor="let token of tokensList" [value]="token.symbol">
+            {{ token.symbol }}
+          </ion-option>
+        </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label color="primary" stacked>Token Symbol</ion-label>
-          <ion-input type="text" [(ngModel)]="token_name"></ion-input>
+          <ion-label color="primary" stacked>Token Contract</ion-label>
+          <ion-input type="text" [(ngModel)]="token_contract"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label color="primary" stacked>Amount to send ({{token_name}})</ion-label>

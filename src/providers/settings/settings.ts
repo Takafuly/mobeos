@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {EosConnectionConfig} from '../chains/eos-connection-config';
-import {EosTestnetConnectionConfig} from '../chains/eos-testnet-connection-config'; 
+import {EosTestnetConnectionConfig} from '../chains/eos-testnet-connection-config';
 import {TelosTestnetConnectionConfig} from '../chains/telos-testnet-connection-config';
 import { STORAGE_KEYS } from '../config';
 
@@ -18,7 +18,7 @@ export class Settings {
   constructor(public storage: Storage) {
     this.checkCachedChain();
   }
-  
+
   checkCachedChain()
   {
     this.storage.get(STORAGE_KEYS.CURRENT_CHAIN)
@@ -35,31 +35,35 @@ export class Settings {
 
   setChainTo(chainKey: string)
   {
-    switch(chainKey) { 
-      case 'telos': { 
+    switch(chainKey) {
+      case 'telos': {
         this.chainConfig = TelosTestnetConnectionConfig.getInstance();
         this.cachedChainKey = 'telos';
-        break; 
-      } 
-      case 'jungle': { 
-        this.chainConfig = EosTestnetConnectionConfig.getInstance(); 
-        this.cachedChainKey = 'jungle';
-        break; 
-      } 
-      case 'eos': { 
-        this.chainConfig = EosConnectionConfig.getInstance(); 
-        this.cachedChainKey = 'eos';
-        break; 
+        break;
       }
-      default: { 
+      case 'jungle': {
+        this.chainConfig = EosTestnetConnectionConfig.getInstance();
+        this.cachedChainKey = 'jungle';
+        break;
+      }
+      case 'eos': {
         this.chainConfig = EosConnectionConfig.getInstance();
-        break; 
-      } 
-   } 
+        this.cachedChainKey = 'eos';
+        break;
+      }
+      default: {
+        this.chainConfig = EosConnectionConfig.getInstance();
+        break;
+      }
+   }
   }
 
   getTokensList() {
     return this.chainConfig.getTokensList();
+  }
+
+  setTokensList(tokensList) {
+    this.chainConfig.setTokensList(tokensList);
   }
 
   getEosConfig() {
@@ -98,13 +102,13 @@ export class Settings {
   }
 
   getAccount(key) {
-    console.log(this.storage.keys());
-    console.log((this.storage.get(key)));
+    //console.log(this.storage.keys());
+    //console.log((this.storage.get(key)));
     let data = null;
     this.storage.get(key)
       .then((val) => {
         data = val;
-        console.log(data);
+        //console.log(data);
       }).catch(error => {
         data = null;
       });
@@ -114,7 +118,7 @@ export class Settings {
   displayTab(display:boolean) {
       let elements = document.querySelectorAll(".tabbar");
 
-      console.log("hide bar");
+      //console.log("hide bar");
 
       if (elements != null) {
           Object.keys(elements).map((key) => {
