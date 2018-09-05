@@ -12,11 +12,11 @@ This is a repo for the MOBEOS toolkit, a mobile app toolkit for the EOS Blockcha
 ## Install and Run
 
 - Clone the product and browse to project root folder
-- If you don't have ionic installed, then run: 
+- If you don't have ionic installed, then run:
 ```
 npm install -g ionic
 ```
-- If you don't have cordova installed, then run: 
+- If you don't have cordova installed, then run:
 ```
 npm install -g cordova
 ```
@@ -28,6 +28,19 @@ npm install
 ```
 ionic serve
 ```
+
+## Generate Android APK file
+
+- first make sure you have a working Android development environment
+- Add the android platform to the ionic project by running
+```
+ionic cordova platform add android
+```
+- Then generate the apk file by running:
+```
+ionic cordova andorid build
+```
+- If successful, the apk file can be found under the project directory in ../platforms/android/build/outputs/apk
 
 ## Built With
 
