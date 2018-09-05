@@ -27,7 +27,7 @@ export class TelosTestnetConnectionConfig {
         this.broadcast = true;
         this.verbose = true; // API activity
         this.sign = true;
-        this.chainExplorerTxnUrl = "";
+        this.chainExplorerTxnUrl = "http://testnet.telosfoundation.io/transactions/";
         this.tokensList = [];
     }
 

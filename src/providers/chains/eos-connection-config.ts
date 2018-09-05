@@ -27,7 +27,7 @@ export class EosConnectionConfig {
         this.broadcast = true;
         this.verbose = true; // API activity
         this.sign = true;
-        this.chainExplorerTxnUrl = "https://bloks.io/transaction/"; // "https://eospark.com/MainNet/tx/";
+        this.chainExplorerTxnUrl = "https://eospark.com/MainNet/tx/"; //"https://bloks.io/transaction/"; //
         this.tokensList = [
             {symbol:'EOSDAC', contract:'eosdactokens'},
             {symbol:'ADD', contract: 'eosadddddddd'},
