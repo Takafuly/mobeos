@@ -15,17 +15,18 @@ import * as Eos from 'eosjs';
 export class WelcomePage {
   loading: any;
   eos: any;
-  chain: any;
+  chain = 'eos';
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public settings: Settings,
     public alertCtrl: AlertController,
     public storage: Storage
   ) {
-
+    this.settings.setChainTo(this.chain);
     this.connectEOS(settings.chainConfig);
+    this.eos = Eos(settings.chainConfig);
   }
 
   chainChosen(chain)

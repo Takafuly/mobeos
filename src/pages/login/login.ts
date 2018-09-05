@@ -34,16 +34,12 @@ export class LoginPage {
 
   getAccount() {
     let skey = this.generateKey(this.pin);
-    console.log("skey"+skey.toString());
-    this.storage.get(skey.toString())
+    this.storage.get(this.settings.getEosConfig().pKeyPrefix+(skey.toString()).slice(0,(skey.toString()).length/2))
       .then((val) => {
         var bytes  = CryptoJS.AES.decrypt(val, skey.toString());
-        console.log("skey"+skey.toString());
-        console.log(bytes.toString(CryptoJS.enc.Utf8));
         var plaintext = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         this.settings.setEosConfigPK(plaintext.key);
         this.settings.setAccountName(plaintext.name);
-        console.log(plaintext);
         this.doLogin();
       }).catch(error => {
         alert("Unable to retrieve wallet");
@@ -52,7 +48,7 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-
       this.navCtrl.push(MainPage);
   }
+
 }

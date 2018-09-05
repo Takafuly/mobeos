@@ -33,7 +33,6 @@ export class SignupPage {
 
     this.eos = Eos(settings.chainConfig);
     this.ecc = Eos.modules['ecc'];
-    console.log(this.settings.getTokensList());
   }
 
   generateKey(p){
@@ -80,10 +79,9 @@ export class SignupPage {
 
   storeAccount(data) {
     let skey = this.generateKey(this.pin);
-    //console.log("skey"+skey.toString());
     var accountdata = {key: this.pk, name: data};
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(accountdata), skey.toString());
-    this.storage.set(skey.toString(),ciphertext.toString());
+    this.storage.set(this.settings.getEosConfig().pKeyPrefix+(skey.toString()).slice(0,(skey.toString()).length/2),ciphertext.toString());
   }
 
   doSignup() {
@@ -92,7 +90,7 @@ export class SignupPage {
         let pubkey = this.ecc.privateToPublic(this.pk);
 
         if (this.ecc.isValidPublic(pubkey)) {
-          
+
           // Check if public key format is prefixed differently
           if(this.settings.getEosConfig().pKeyPrefix != 'EOS'){
             pubkey = pubkey.replace('EOS', this.settings.getEosConfig().pKeyPrefix);
