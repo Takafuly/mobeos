@@ -22,7 +22,7 @@ export class EosConnectionConfig {
         this.mainContractName = 'eosio.token';
         this.chainName = "EOS Mainnet";
         this.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'; // 32 byte (64 char) hex string
-        this.httpEndpoint = 'https://eu1.eosdac.io:443';
+        this.httpEndpoint = 'https://eos.greymass.com:443';
         this.expireInSeconds = 60;
         this.broadcast = true;
         this.verbose = true; // API activity
