@@ -21,8 +21,8 @@ export class TelosTestnetConnectionConfig {
         this.systemTokenName = 'TLOS';
         this.mainContractName = 'tlos.token';
         this.chainName = "TELOS Testnet";
-        this.chainId = '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207'; // 32 byte (64 char) hex string
-        this.httpEndpoint = 'http://144.202.89.120:8888'; // Telos Testnet Endpoint
+        this.chainId = '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11'; // 32 byte (64 char) hex string
+        this.httpEndpoint = 'http://api.telos.eosindex.io'; // Telos Testnet Endpoint
         this.expireInSeconds = 60;
         this.broadcast = true;
         this.verbose = true; // API activity
