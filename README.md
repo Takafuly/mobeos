@@ -2,6 +2,10 @@
 
 This is a repo for the MOBEOS toolkit, a mobile app toolkit for the EOS Blockchain
 
+### Documentation
+
+[MOBEOS An Open Source Mobile App Toolkit for EOS](https://medium.com/@takafuly/mobeos-an-open-source-mobile-app-toolkit-for-eos-f84166dcadfc)
+
 ## Prerequisites
 
 - node.js: v10.9.0
